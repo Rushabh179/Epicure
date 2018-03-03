@@ -1,7 +1,9 @@
-package com.project.rushabh.epicure;
+package com.project.rushabh.epicure.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.project.rushabh.epicure.R;
 
 public class MainActivity extends AppCompatActivity {
 
