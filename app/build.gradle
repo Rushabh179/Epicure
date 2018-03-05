@@ -32,7 +32,8 @@ android {
                     [
                             'src/main/res',
                             'src/main/res/layouts',
-                            'src/main/res/layouts/activity'
+                            'src/main/res/layouts/activity',
+                            'src/main/res/layouts/listitem'
                     ]
         }
     }

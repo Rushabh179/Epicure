@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Epicure</string>
 
+    <!-- Item Activty -->
     <string name="cart_detail">CART DETAIL</string>
     <string name="clear_all">Clear All</string>
     <string name="complete_order">COMPLETE ORDER</string>
@@ -15,4 +16,7 @@
     <string name="sent_order">Your order has been successfully completed. :)</string>
     <string name="failed_order">Something went wrong. :(</string>
     <string name="sending_order">Your order is being completed, please wait.</string>
+
+    <!-- Places activity -->
+    <string name="place_image_contentdesc">Place Image</string>
 </resources>
