@@ -1,16 +1,23 @@
 package com.project.rushabh.epicure.activity;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.project.rushabh.epicure.R;
+import com.project.rushabh.epicure.adapter.PlacesRecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlacesActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView placesRecyclerView;
+    private PlacesRecyclerViewAdapter placesRecyclerViewAdapter;
+    private List<String> placesTitle;
+    private DividerItemDecoration decoration;
 
 
     @Override
@@ -18,10 +25,18 @@ public class PlacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerview_main);
-    }
+        placesRecyclerView = findViewById(R.id.recyclerview_main);
+        placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        placesRecyclerView.addItemDecoration(decoration);
 
-    public void toItems(View view) {
-        startActivity(new Intent(this, ItemActivity.class));
+        placesTitle = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            placesTitle.add("Place " + i);
+        }
+
+        placesRecyclerViewAdapter = new PlacesRecyclerViewAdapter(this, placesTitle);
+        placesRecyclerView.setAdapter(placesRecyclerViewAdapter);
+
     }
 }
