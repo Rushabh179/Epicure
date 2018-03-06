@@ -2,7 +2,7 @@
     <string name="app_name">Epicure</string>
 
     <!-- Item Activty -->
-    <string name="cart_detail">CART DETAIL</string>
+    <string name="cart_detail">CART DETAILS</string>
     <string name="clear_all">Clear All</string>
     <string name="complete_order">COMPLETE ORDER</string>
     <string name="multiplier">X</string>

@@ -215,7 +215,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         subCategoryList.add(new SubCategory(8, 3, "Coffee"));
         subCategoryList.add(new SubCategory(9, 3, "Fruit Juice"));
 
-        categoryList.add(new Category(4, "Clothing & Accessories", R.drawable.clothing));
+        /*categoryList.add(new Category(4, "Clothing & Accessories", R.drawable.clothing));TODO: Extra categories
         subCategoryList.add(new SubCategory(10, 4, "T-Shirt"));
         subCategoryList.add(new SubCategory(11, 4, "Jean"));
         subCategoryList.add(new SubCategory(12, 4, "Jacket"));
@@ -232,7 +232,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         subCategoryList.add(new SubCategory(21, 5, "TV & Video"));
         subCategoryList.add(new SubCategory(22, 5, "Camera & Photo"));
         subCategoryList.add(new SubCategory(23, 5, "Video Game"));
-        subCategoryList.add(new SubCategory(24, 5, "Wearable"));
+        subCategoryList.add(new SubCategory(24, 5, "Wearable"));*/
 
         //Hamburger
         itemList.add(new Item(1, 2, 1, "Ultimate Hamburger", 5.0, "https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/pass/the-ultimate-hamburger.jpg"));
@@ -276,7 +276,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList.add(new Item(23, 3, 9, "Apricot Fruit Juice", 1.0, "http://cdn.avansas.com/assets/53313/cappy-meyve-suyu-kayisi-1-lt-0-zoom.jpg"));
         itemList.add(new Item(24, 3, 9, "Orange Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791980.jpg"));
 
-        //Tshirt
+        /*//Tshirt TODO: extra subcategories
         itemList.add(new Item(25, 4, 10, "Black T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0628_1.jpg"));
         itemList.add(new Item(26, 4, 10, "Blue T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0428_1.jpg"));
         itemList.add(new Item(27, 4, 10, "White T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0603_1.jpg"));
@@ -348,7 +348,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList.add(new Item(66, 5, 24, "Galaxy Gear S2", 220.0, "http://media.4rgos.it/i/Argos/5207042_R_Z002A?$Web$&$DefaultPDP570$"));
         itemList.add(new Item(67, 5, 24, "Galaxy Gear S3", 330.0, "http://www.samsung.com/global/galaxy/gear-s3/images/gear-s3-highlights_design_ft.jpg"));
         itemList.add(new Item(68, 5, 24, "Apple Watch", 440.0, "https://brain-images-ssl.cdn.dixons.com/2/9/10151992/l_10151992_001.jpg"));
-        itemList.add(new Item(69, 5, 24, "Xiaomi Mi Band 2", 20.0, "https://image4.geekbuying.com/ggo_pic/2016-06-03/201606309322239menyh.jpg"));
+        itemList.add(new Item(69, 5, 24, "Xiaomi Mi Band 2", 20.0, "https://image4.geekbuying.com/ggo_pic/2016-06-03/201606309322239menyh.jpg"));*/
 
         /*
         * Populates solutionList.
