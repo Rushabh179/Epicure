@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/image_places"
+        android:id="@+id/image_places_thumb"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
         android:contentDescription="@string/image_contentdescription"
@@ -25,7 +25,7 @@
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toTopOf="@+id/text_places_details"
         app:layout_constraintEnd_toStartOf="@+id/image_place_location"
-        app:layout_constraintStart_toEndOf="@+id/image_places"
+        app:layout_constraintStart_toEndOf="@+id/image_places_thumb"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Place name" />
 

@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.activity.ItemActivity;
 
@@ -22,14 +24,15 @@ import java.util.List;
 public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder> {
 
     private List<List<String>> placesLists;
-    private List<String> placesTitle, placesDetails;
+    private List<String> placesTitleList, placesDetailList, placesThumbList;
     private Context context;
 
     public PlacesRecyclerViewAdapter(Context context, List<List<String>> placesLists) {
         this.context = context;
         this.placesLists = placesLists;
-        placesTitle = placesLists.get(0);
-        placesDetails = placesLists.get(1);
+        placesTitleList = placesLists.get(0);
+        placesDetailList = placesLists.get(1);
+        placesThumbList = placesLists.get(2);
     }
 
     @NonNull
@@ -42,22 +45,27 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.placeTitleText.setText(placesTitle.get(position));
-        holder.placesDetailsText.setText(placesDetails.get(position));
+        holder.placeTitleText.setText(placesTitleList.get(position));
+        holder.placesDetailsText.setText(placesDetailList.get(position));
+
+        Glide.with(context).load(placesThumbList.get(position)).into(holder.placesThumbImage);
     }
 
     @Override
     public int getItemCount() {
-        return placesTitle.size();
+        return placesTitleList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private TextView placeTitleText, placesDetailsText;
+        private ImageView placesThumbImage;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             placeTitleText = itemView.findViewById(R.id.text_places_title);
             placesDetailsText = itemView.findViewById(R.id.text_places_details);
+            placesThumbImage = itemView.findViewById(R.id.image_places_thumb);
             placeTitleText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
