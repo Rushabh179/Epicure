@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.activity.ItemActivity;
+import com.project.rushabh.epicure.activity.MapsActivity;
 
 import java.util.List;
 
@@ -47,7 +48,6 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.placeTitleText.setText(placesTitleList.get(position));
         holder.placesDetailsText.setText(placesDetailList.get(position));
-
         Glide.with(context).load(placesThumbList.get(position)).into(holder.placesThumbImage);
     }
 
@@ -59,18 +59,27 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView placeTitleText, placesDetailsText;
-        private ImageView placesThumbImage;
+        private ImageView placesThumbImage, placesLocationImage;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             placeTitleText = itemView.findViewById(R.id.text_places_title);
             placesDetailsText = itemView.findViewById(R.id.text_places_details);
             placesThumbImage = itemView.findViewById(R.id.image_places_thumb);
+            placesLocationImage = itemView.findViewById(R.id.image_place_location);
+
             placeTitleText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context, Integer.toString(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, ItemActivity.class));
+                }
+            });
+
+            placesLocationImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(context, MapsActivity.class));
                 }
             });
         }
