@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/rlCart"
-                style="@android:style/Widget.ActionButton"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:padding="5dp">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlCart"
+    style="@android:style/Widget.ActionButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless" >
 
     <ImageView
         android:id="@+id/imgCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:contentDescription="@string/image_contentdescription"
         android:gravity="center"
-        android:src="@drawable/cart"/>
+        android:src="@drawable/cart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView android:id="@+id/txtCount"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="@dimen/badge_size"
-              android:layout_height="@dimen/badge_size"
-              android:layout_alignParentEnd="true"
-              android:layout_alignTop="@+id/imgCart"
-              android:background="@drawable/cart_count"
-              android:gravity="center"
-              android:textColor="@android:color/white"
-              android:textSize="@dimen/small_text_size"
-              android:visibility="gone"/>
+    <TextView
+        android:id="@+id/txtCount"
+        android:layout_width="@dimen/_11sdp"
+        android:layout_height="@dimen/_11sdp"
+        android:background="@drawable/cart_count"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_8sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/imgCart"
+        app:layout_constraintTop_toTopOf="@+id/imgCart"
+        tools:text="11" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

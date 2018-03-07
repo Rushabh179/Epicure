@@ -5,7 +5,7 @@
     <item
         android:id="@+id/actionCart"
         android:orderInCategory="1"
-        android:title="Cart"
+        android:title="@string/menu_cart"
         app:actionLayout="@layout/layout_menu_cart"
         app:showAsAction="always"/>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,25 +9,29 @@
 
     <TextView
         android:id="@+id/txtSectionTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/xlarge_margin_size"
-        android:layout_toStartOf="@+id/imgCaret"
+        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/large_text_size"
+        android:textSize="@dimen/_20sdp"
         android:textStyle="bold"
-        tools:ignore="UnusedAttribute"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgCaret"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Section" />
 
     <ImageView
         android:id="@+id/imgCaret"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/xlarge_margin_size"
-        android:src="@drawable/ic_collapse"/>
+        android:contentDescription="@string/image_contentdescription"
+        android:src="@drawable/ic_collapse"
+        app:layout_constraintBottom_toBottomOf="@+id/txtSectionTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtSectionTitle"
+        app:layout_constraintTop_toTopOf="@+id/txtSectionTitle" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

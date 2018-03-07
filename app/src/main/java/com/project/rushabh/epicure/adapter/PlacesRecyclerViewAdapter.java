@@ -21,12 +21,15 @@ import java.util.List;
 
 public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder> {
 
-    private List<String> placesTitle;
+    private List<List<String>> placesLists;
+    private List<String> placesTitle, placesDetails;
     private Context context;
 
-    public PlacesRecyclerViewAdapter(Context context, List<String> placesTitle) {
+    public PlacesRecyclerViewAdapter(Context context, List<List<String>> placesLists) {
         this.context = context;
-        this.placesTitle = placesTitle;
+        this.placesLists = placesLists;
+        placesTitle = placesLists.get(0);
+        placesDetails = placesLists.get(1);
     }
 
     @NonNull
@@ -39,7 +42,8 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.placesRecyclerTitle.setText(placesTitle.get(position));
+        holder.placeTitleText.setText(placesTitle.get(position));
+        holder.placesDetailsText.setText(placesDetails.get(position));
     }
 
     @Override
@@ -48,12 +52,13 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView placesRecyclerTitle;
+        private TextView placeTitleText, placesDetailsText;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            placesRecyclerTitle = itemView.findViewById(R.id.text_places_title);
-            placesRecyclerTitle.setOnClickListener(new View.OnClickListener() {
+            placeTitleText = itemView.findViewById(R.id.text_places_title);
+            placesDetailsText = itemView.findViewById(R.id.text_places_details);
+            placeTitleText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context, Integer.toString(getAdapterPosition()), Toast.LENGTH_SHORT).show();

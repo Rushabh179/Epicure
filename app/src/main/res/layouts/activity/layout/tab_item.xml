@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
-              android:clickable="false"
-              android:gravity="center"
-              android:id="@+id/llCategoryContainer"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llCategoryContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/imgCategoryIcon"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/_30sdp"
         android:clickable="false"
-        android:src="@drawable/food"/>
+        android:contentDescription="@string/image_contentdescription"
+        tools:src="@drawable/food" />
 
     <TextView
         android:id="@+id/txtCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:clickable="false"
-        android:text=""
+        android:gravity="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        tools:text="Tab" />
 
 </LinearLayout>

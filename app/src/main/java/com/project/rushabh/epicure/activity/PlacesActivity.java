@@ -16,14 +16,14 @@ public class PlacesActivity extends AppCompatActivity {
 
     private RecyclerView placesRecyclerView;
     private PlacesRecyclerViewAdapter placesRecyclerViewAdapter;
-    private List<String> placesTitle;
+    private List<String> placesTitle, placesDetails;
     private DividerItemDecoration decoration;
-
+    private List<List<String>> placesLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_places);
 
         placesRecyclerView = findViewById(R.id.recyclerview_main);
         placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -31,11 +31,17 @@ public class PlacesActivity extends AppCompatActivity {
         placesRecyclerView.addItemDecoration(decoration);
 
         placesTitle = new ArrayList<>();
+        placesDetails = new ArrayList<>();
+        placesLists = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
             placesTitle.add("Place " + i);
+            placesDetails.add("Details" + i);
         }
 
-        placesRecyclerViewAdapter = new PlacesRecyclerViewAdapter(this, placesTitle);
+        placesLists.add(placesTitle);
+        placesLists.add(placesDetails);
+
+        placesRecyclerViewAdapter = new PlacesRecyclerViewAdapter(this, placesLists);
         placesRecyclerView.setAdapter(placesRecyclerViewAdapter);
 
     }

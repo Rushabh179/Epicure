@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -46,7 +47,7 @@ import java.util.Map;
 public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback, OrderAdapter.IOrderAdapterCallback {
 
     private DrawerLayout drawer;
-    private RelativeLayout rlCart;
+    private ConstraintLayout rlCart;
     private TextView txtCount;
     private TextView txtTotal;
     private RecyclerView rvOrder;
@@ -186,7 +187,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 handleOrderDrawer();
             }
         });
-
         return true;
     }
 
@@ -256,7 +256,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList.add(new Item(13, 2, 4, "Tel Kadayıf with Pistachio", 9.0, "http://www.karakoygulluoglu.com/fistikli-tel-kadayif-1-39-44-B.jpg"));
 
         //Water
-        itemList.add(new Item(14, 3, 5, "0.5 liter", 0.30, "http://cdn.avansas.com/assets/59479/erikli-su-0-5-lt-12-li-1-zoom.jpg"));
+        itemList.add(new Item(14, 3, 5, "0.5 liter", 300000/*0.30*/, "http://cdn.avansas.com/assets/59479/erikli-su-0-5-lt-12-li-1-zoom.jpg"));
 
         //Soda
         itemList.add(new Item(15, 3, 6, "Coca Cola 0.3l", 0.70, "https://images-na.ssl-images-amazon.com/images/I/818i%2BQm07UL._SL1500_.jpg"));
@@ -543,7 +543,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      * @see com.project.rushabh.epicure.util.CircleImageView
      */
     private void addItemToCartAnimation(ImageView targetView, final Item item, final int quantity) {
-        RelativeLayout destView = findViewById(R.id.rlCart);
+        ConstraintLayout destView = findViewById(R.id.rlCart);
 
         new CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(300).setDestView(destView).setAnimationListener(new Animator.AnimatorListener() {
             @Override

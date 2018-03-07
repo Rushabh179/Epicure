@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card_view="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/elevation"
+    app:cardUseCompatPadding="true">
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cardItem"
-        android:background="@android:color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:padding="@dimen/normal_padding_size"
-        android:layout_margin="@dimen/margin_size"
-        card_view:cardCornerRadius="@dimen/corner_radius"
-        card_view:cardElevation="@dimen/elevation"
-        card_view:cardUseCompatPadding="true">
+        android:clickable="false"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imgThumbnail"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_height"
-            android:clickable="false"
-            android:orientation="vertical">
+            android:layout_height="@dimen/_130sdp"
+            android:contentDescription="@string/image_contentdescription"
+            android:padding="@dimen/_15sdp"
+            app:layout_constraintBottom_toTopOf="@+id/txtItemName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/food" />
 
-            <ImageView
-                android:id="@+id/imgThumbnail"
-                android:padding="@dimen/large_padding_size"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/card_image_height"/>
+        <TextView
+            android:id="@+id/txtItemName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txtPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgThumbnail"
+            tools:text="Item name" />
 
-            <TextView
-                android:id="@+id/txtItemName"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_name_height"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
-                android:gravity="center"
-                android:paddingStart="@dimen/normal_padding_size"
-                android:paddingEnd="@dimen/normal_padding_size"
-                android:textStyle="bold"
-                android:textColor="@color/colorItemName"
-                android:textSize="@dimen/normal_text_size"/>
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@color/colorAccent"
+            android:gravity="start|center"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtItemName"
+            tools:text="Price" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:background="@color/colorAccent"
-                android:layout_height="@dimen/item_name_height">
+        <ImageView
+            android:id="@+id/imgAdd"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/add_item_bg"
+            android:contentDescription="@string/image_contentdescription"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
+            app:layout_constraintEnd_toEndOf="@+id/txtPrice"
+            app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 
-                <TextView
-                    android:id="@+id/txtPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:gravity="start|center"
-                    android:paddingStart="@dimen/normal_padding_size"
-                    android:paddingEnd="@dimen/normal_padding_size"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/normal_text_size"/>
+    </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imgAdd"
-                    android:layout_width="@dimen/add_image_size"
-                    android:layout_height="@dimen/add_image_size"
-                    android:padding="@dimen/normal_padding_size"
-                    android:layout_marginEnd="@dimen/margin_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/add_item_bg"
-                    android:src="@drawable/ic_plus"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

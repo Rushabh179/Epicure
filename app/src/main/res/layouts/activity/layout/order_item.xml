@@ -1,110 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card_view="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="100dp"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/small_padding_size"
-              android:paddingLeft="@dimen/normal_padding_size"
-              android:paddingRight="@dimen/normal_padding_size"
-              android:paddingTop="@dimen/small_padding_size">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardItem"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_90sdp"
+    android:background="@android:color/white"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/_3sdp"
+    app:cardElevation="@dimen/_2sdp"
+    app:cardUseCompatPadding="true">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardItem"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:padding="@dimen/normal_padding_size"
-        card_view:cardCornerRadius="@dimen/corner_radius"
-        card_view:cardElevation="@dimen/elevation"
-        card_view:cardUseCompatPadding="true">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imgThumbnail"
+            android:layout_width="@dimen/_80sdp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:contentDescription="@string/image_contentdescription"
+            android:padding="@dimen/_5sdp"
+            android:scaleType="fitCenter"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtItemName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/food" />
 
-            <ImageView
-                android:id="@+id/imgThumbnail"
-                android:layout_width="@dimen/order_image_width"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:padding="@dimen/small_padding_size"
-                android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/txtItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toTopOf="@+id/txtExtendedPrice"
+            app:layout_constraintEnd_toStartOf="@+id/btnIncrease"
+            app:layout_constraintStart_toEndOf="@+id/imgThumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="Item name" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="@dimen/large_margin_size"
-                android:layout_marginRight="@dimen/large_margin_size"
-                android:layout_toEndOf="@+id/imgThumbnail"
-                android:layout_toStartOf="@+id/llIncrement"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtExtendedPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtItemName"
+            app:layout_constraintStart_toEndOf="@+id/imgThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/txtItemName"
+            tools:text="Price" />
 
-                <TextView
-                    android:id="@+id/txtItemName"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="start|bottom"
-                    android:padding="@dimen/normal_padding_size"/>
+        <Button
+            android:id="@+id/btnIncrease"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:text="@string/plus"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBottom_toTopOf="@+id/txtQuantity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtItemName"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/txtExtendedPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="start|top"
-                    android:padding="@dimen/normal_padding_size"/>
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnDecrease"
+            app:layout_constraintEnd_toEndOf="@+id/btnIncrease"
+            app:layout_constraintStart_toStartOf="@+id/btnIncrease"
+            app:layout_constraintTop_toBottomOf="@+id/btnIncrease"
+            tools:text="11" />
 
-            </LinearLayout>
+        <Button
+            android:id="@+id/btnDecrease"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:text="@string/minus"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnIncrease"
+            app:layout_constraintStart_toStartOf="@+id/btnIncrease"
+            app:layout_constraintTop_toBottomOf="@+id/txtQuantity" />
 
-            <LinearLayout
-                android:id="@+id/llIncrement"
-                android:layout_width="@dimen/drawer_footer_height"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:orientation="vertical"
-                android:weightSum="5">
+    </android.support.constraint.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/btnIncrease"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@android:color/transparent"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:text="@string/plus"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/large_text_size"/>
-
-                <TextView
-                    android:id="@+id/txtQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="@dimen/normal_text_size"
-                    android:textStyle="bold"/>
-
-                <Button
-                    android:id="@+id/btnDecrease"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:background="@android:color/transparent"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="@string/minus"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/large_text_size"/>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
