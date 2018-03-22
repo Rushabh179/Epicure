@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ItemActivity"></activity>
+        <activity android:name=".activity.ItemActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,6 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.rushabh.epicure.activity.PlacesActivity" />
         </activity>
+        <activity android:name=".activity.LoginActivity"></activity>
     </application>
 
 </manifest>
