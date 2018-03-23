@@ -5,4 +5,5 @@
     android:id="@+id/recyclerview_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.rushabh.epicure.activity.PlacesActivity"/>
+    tools:listitem="@layout/list_item_recyclerview_places"
+    tools:context="com.project.rushabh.epicure.fragment.PlacesFragment"/>

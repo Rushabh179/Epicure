@@ -9,6 +9,7 @@
         android:id="@+id/image_places_thumb"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
+        android:padding="@dimen/_5sdp"
         android:contentDescription="@string/image_contentdescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_places_title"
