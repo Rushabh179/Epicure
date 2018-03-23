@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.GeoPoint;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.activity.ItemActivity;
 import com.project.rushabh.epicure.activity.MapsActivity;
@@ -25,15 +26,17 @@ import java.util.List;
 public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder> {
 
     private List<List<String>> placesLists;
-    private List<String> placesTitleList, placesDetailList, placesThumbList;
+    private List<String> placesNameList, placesInformationList, placesImageList;
+    private List<GeoPoint> placesLocationList;
     private Context context;
 
-    public PlacesRecyclerViewAdapter(Context context, List<List<String>> placesLists) {
+    public PlacesRecyclerViewAdapter(Context context, List<List<String>> placesLists, List<GeoPoint> placesLocationList) {
         this.context = context;
         this.placesLists = placesLists;
-        placesTitleList = placesLists.get(0);
-        placesDetailList = placesLists.get(1);
-        placesThumbList = placesLists.get(2);
+        placesNameList = placesLists.get(0);
+        placesInformationList = placesLists.get(1);
+        placesImageList = placesLists.get(2);
+        this.placesLocationList = placesLocationList;
     }
 
     @NonNull
@@ -46,14 +49,14 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.placeTitleText.setText(placesTitleList.get(position));
-        holder.placesDetailsText.setText(placesDetailList.get(position));
-        Glide.with(context).load(placesThumbList.get(position)).into(holder.placesThumbImage);
+        holder.placeTitleText.setText(placesNameList.get(position));
+        holder.placesDetailsText.setText(placesInformationList.get(position));
+        Glide.with(context).load(placesImageList.get(position)).into(holder.placesThumbImage);
     }
 
     @Override
     public int getItemCount() {
-        return placesTitleList.size();
+        return placesNameList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +82,9 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
             placesLocationImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, MapsActivity.class));
+                    context.startActivity(new Intent(context, MapsActivity.class)
+                            .putExtra("latitude", placesLocationList.get(getAdapterPosition()).getLatitude())
+                            .putExtra("longitude", placesLocationList.get(getAdapterPosition()).getLongitude()));
                 }
             });
         }
