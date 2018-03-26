@@ -21,7 +21,7 @@
     <string name="image_contentdescription">Contentdescription</string>
     <string name="menu_cart">Cart</string>
     <string name="title_activity_maps">Map</string>
-    <string name="login_username_hint">Username</string>
+    <string name="login_username_hint">E-mail</string>
     <string name="login_password_hint">Password</string>
     <string name="title_activity_main">MainActivity</string>
 
@@ -35,4 +35,10 @@
     <string name="nav_drawer_item_4">Profile</string>
     <string name="nav_drawer_sub_menu">Communicate</string>
     <string name="nav_drawer_sub_item1">Share</string>
+
+    <string name="shared_pref_file_name">SharedPrefFileName</string>
+    <string name="is_logged_in">isLoggedIn</string>
+    <string name="sign_up"><center>Don\'t own an account?\nSign up instead</center></string>
+    <string name="login_btn">Login</string>
+    <string name="nav_drawer_item_5">Logout</string>
 </resources>

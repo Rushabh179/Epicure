@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_test_2"
+    tools:context="com.project.rushabh.epicure.activity.SplashScreenActivity">
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.8"
+        android:contentDescription="@string/image_contentdescription"
+        android:src="@drawable/ic_restaurant"
+        android:tint="#b37738"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title_splash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_title_splash" />
+
+    <TextView
+        android:id="@+id/text_title_splash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_5sdp"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:outlineProvider="bounds"
+        android:text="@string/app_name"
+        android:textColor="#d1b920"
+        android:textSize="@dimen/_80sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_to_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:onClick="onSplashClick"
+        android:text="Make an account >"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_to_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_logo"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/btn_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSplashClick"
+        android:text="Log into your account >"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_without_login"
+        app:layout_constraintEnd_toEndOf="@+id/btn_to_signup"
+        app:layout_constraintStart_toStartOf="@+id/btn_to_signup"
+        app:layout_constraintTop_toBottomOf="@+id/btn_to_signup" />
+
+    <Button
+        android:id="@+id/btn_without_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSplashClick"
+        android:text="Continue without login >"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_to_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_to_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_to_login" />
+
+</android.support.constraint.ConstraintLayout>
