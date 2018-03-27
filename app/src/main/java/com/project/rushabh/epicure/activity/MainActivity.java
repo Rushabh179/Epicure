@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_item_5) {
             editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.is_logged_in), false).apply();
-            finish();
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         } else if (id == R.id.nav_sub_item_1) {
 
         }

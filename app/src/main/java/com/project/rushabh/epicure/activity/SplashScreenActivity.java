@@ -22,11 +22,17 @@ public class SplashScreenActivity extends AppCompatActivity {
     private TextView mainTitleText;
     private ImageView mainLogoImage;
     private Animation fadeInAnim, elevateAnim;
+    private Intent mainIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(getString(R.string.is_logged_in), false)) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_splash_screen);
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -40,41 +46,35 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         fadeInAnim = AnimationUtils.loadAnimation(this, R.anim.anim_fadein);
         elevateAnim = AnimationUtils.loadAnimation(this, R.anim.anim_elevate);
-
-        sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!sharedPreferences.getBoolean(getString(R.string.is_logged_in), false)) {
-            //Toast.makeText(this, "You're not logged in", Toast.LENGTH_SHORT).show();
-            mainLogoImage.startAnimation(elevateAnim);
-            mainTitleText.startAnimation(elevateAnim);
-            toSignUpBtn.startAnimation(fadeInAnim);
-            toLogInButton.startAnimation(fadeInAnim);
-            toMainBtn.startAnimation(fadeInAnim);
-        } else {
-            /*mainTitleText.startAnimation(steadyAnim);
-            mainLogoImage.startAnimation(steadyAnim);
-            toSignUpBtn.setVisibility(View.INVISIBLE);
-            toLogInButton.setVisibility(View.INVISIBLE);
-            toMainBtn.setVisibility(View.INVISIBLE);*/
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
+        Toast.makeText(this, "You're not logged in", Toast.LENGTH_SHORT).show();
+        mainLogoImage.startAnimation(elevateAnim);
+        mainTitleText.startAnimation(elevateAnim);
+        toSignUpBtn.startAnimation(fadeInAnim);
+        toLogInButton.startAnimation(fadeInAnim);
+        toMainBtn.startAnimation(fadeInAnim);
     }
 
     public void onSplashClick(View view) {
         switch (view.getId()) {
             case R.id.btn_to_signup:
+                mainIntent = new Intent(this, SignUpActivity.class);
+                startActivity(mainIntent);
                 break;
             case R.id.btn_to_login:
-                startActivity(new Intent(this, LoginActivity.class));
+                mainIntent = new Intent(this, LoginActivity.class);
+                startActivity(mainIntent);
+                finish();
                 break;
             case R.id.btn_to_main:
+                mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
                 finish();
-                startActivity(new Intent(this, MainActivity.class));
+                break;
         }
     }
 }

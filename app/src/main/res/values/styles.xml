@@ -23,6 +23,9 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- For partially-transparent status bar
+        <item name="android:windowTranslucentStatus">true</item> -->
+        <!-- For fully-transparent status bar -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>

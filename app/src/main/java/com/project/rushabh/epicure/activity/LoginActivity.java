@@ -26,10 +26,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
-        editor = sharedPreferences.edit();
-        editor.putBoolean(getString(R.string.is_logged_in),true).apply();
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
+        switch (view.getId()){
+            case R.id.btn_login:
+                editor = sharedPreferences.edit();
+                editor.putBoolean(getString(R.string.is_logged_in), true).apply();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                break;
+            case R.id.text_to_signup:
+                startActivity(new Intent(this, SignUpActivity.class));
+        }
     }
 
     @Override
