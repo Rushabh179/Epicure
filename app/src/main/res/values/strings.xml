@@ -38,9 +38,10 @@
 
     <string name="shared_pref_file_name">SharedPrefFileName</string>
     <string name="is_logged_in">isLoggedIn</string>
-    <string name="sign_up"><center>Don\'t own an account?\nSign up instead</center></string>
+    <string name="to_sign_up"><center>Don\'t own an account?\nSign up instead</center></string>
     <string name="login_btn">Login</string>
     <string name="nav_drawer_item_5">Logout</string>
     <string name="signup_hint_full_name">Full name</string>
     <string name="signup_retype_password_hint">Retype password</string>
+    <string name="to_log_in">Already have an account?\nLog in</string>
 </resources>
