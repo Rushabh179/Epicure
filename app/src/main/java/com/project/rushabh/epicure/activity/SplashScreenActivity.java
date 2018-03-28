@@ -68,7 +68,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             case R.id.btn_to_login:
                 mainIntent = new Intent(this, LoginActivity.class);
                 startActivity(mainIntent);
-                finish();
                 break;
             case R.id.btn_to_main:
                 mainIntent = new Intent(this, MainActivity.class);

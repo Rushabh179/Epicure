@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
             case R.id.text_signup_previous:
                 viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                 break;
-            case R.id.text_title_login:
+            case R.id.text_to_login:
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
         }

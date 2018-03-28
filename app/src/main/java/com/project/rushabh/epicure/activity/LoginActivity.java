@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case R.id.text_to_signup:
                 startActivity(new Intent(this, SignUpActivity.class));
+                finish();
         }
     }
 
