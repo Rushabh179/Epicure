@@ -19,3 +19,6 @@ https://developer.android.com/studio/build/shrink-code.html
 Splash Screen:
 https://android.jlelse.eu/the-complete-android-splash-screen-guide-c7db82bce565
 https://medium.com/@ssaurel/create-a-splash-screen-on-android-the-right-way-93d6fb444857
+
+NonSwipeableViewPager
+https://stackoverflow.com/questions/9650265/how-do-disable-paging-by-swiping-with-finger-in-viewpager-but-still-be-able-to-s/13437997#13437997

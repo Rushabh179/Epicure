@@ -44,4 +44,12 @@
     <string name="signup_hint_full_name">Full name</string>
     <string name="signup_retype_password_hint">Retype password</string>
     <string name="to_log_in">Already have an account?\nLog in</string>
+    <string name="sign_up_subtitle_1">Account info.</string>
+    <string name="sign_up_next"><![CDATA[Next >]]></string>
+    <string name="sign_up_previous"><![CDATA[< Previous]]></string>
+    <string name="sign_up_hint_phone">Contact no.</string>
+    <string name="sign_up_address">Home address</string>
+    <string name="sign_up_location">Verify location on map</string>
+    <string name="sign_up_btn">Sign up</string>
+    <string name="sign_up_subtitle_2">Personal info.</string>
 </resources>
