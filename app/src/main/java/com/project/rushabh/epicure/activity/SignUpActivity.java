@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.project.rushabh.epicure.R;
-import com.project.rushabh.epicure.test.SignUpSectionPagerAdaper;
+import com.project.rushabh.epicure.adapter.SignUpSectionPagerAdaper;
 import com.project.rushabh.epicure.util.NonSwipeableViewPager;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.test_activity_signup);
+        setContentView(R.layout.activity_sign_up);
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
                         nextText.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        subTitleText.setText(getString(R.string.sign_up_subtitle_2));
+                        subTitleText.setText(null);
                         previousText.setVisibility(View.VISIBLE);
                         nextText.setVisibility(View.INVISIBLE);
                         break;

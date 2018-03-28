@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;
-            case R.id.text_to_signup:
+            case R.id.text_to_sign_up:
                 startActivity(new Intent(this, SignUpActivity.class));
                 finish();
         }

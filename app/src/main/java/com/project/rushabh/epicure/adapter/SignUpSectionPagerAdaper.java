@@ -1,10 +1,11 @@
-package com.project.rushabh.epicure.test;
+package com.project.rushabh.epicure.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.project.rushabh.epicure.R;
+import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
 
 /**
  * Created by rushabh.modi on 27/03/18.

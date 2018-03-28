@@ -1,4 +1,4 @@
-package com.project.rushabh.epicure.test;
+package com.project.rushabh.epicure.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,11 +36,6 @@ public class SignUpPlaceHolderFragment extends Fragment {
         View rootView = null;
         if (getArguments() != null) {
             rootView = inflater.inflate(getArguments().getInt(ARG_FRAGMENT_RESOURCE), container, false);
-            //TextView textView = rootView.findViewById();
-            //String tabString;
-
-            //tabString = getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)) + "\n";
-            //textView.setText(tabString);//getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         }
         return rootView;
     }
