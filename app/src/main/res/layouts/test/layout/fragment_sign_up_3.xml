@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text_sign_up_welcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="@string/sign_up_welcome"
+        android:textColor="#b6ad68"
+        android:textSize="@dimen/_50sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:background="#0d795f"
+        android:elevation="@dimen/_1sdp"
+        android:fontFamily="cursive"
+        android:text="@string/sign_up_btn"
+        android:textColor="#e0e7e9"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_sign_up_welcome" />
+
+</android.support.constraint.ConstraintLayout>

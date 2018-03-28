@@ -23,12 +23,14 @@ public class SignUpSectionPagerAdaper extends FragmentPagerAdapter {
                 return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_1, position);
             case 1:
                 return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_2, position);
+            case 2:
+                return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_3, position);
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.viewpager_sign_up);
         viewPager.setAdapter(sectionsPagerAdapter);
-        viewPager.setOffscreenPageLimit(1);//to load all the pages together
+        //viewPager.setOffscreenPageLimit(3);//to load all the pages together
 
         subTitleText = findViewById(R.id.text_signup_sub_title);
         nextText = findViewById(R.id.text_signup_next);
@@ -53,6 +53,11 @@ public class SignUpActivity extends AppCompatActivity {
                         nextText.setVisibility(View.VISIBLE);
                         break;
                     case 1:
+                        subTitleText.setText(getString(R.string.sign_up_subtitle_2));
+                        previousText.setVisibility(View.VISIBLE);
+                        nextText.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
                         subTitleText.setText(getString(R.string.sign_up_subtitle_2));
                         previousText.setVisibility(View.VISIBLE);
                         nextText.setVisibility(View.INVISIBLE);

@@ -2,9 +2,9 @@
     <string name="app_name">Epicure</string>
 
     <!-- Item Activty -->
-    <string name="cart_detail">CART DETAILS</string>
-    <string name="clear_all">Clear All</string>
-    <string name="complete_order">COMPLETE ORDER</string>
+    <string name="cart_detail_header">CART DETAILS</string>
+    <string name="cart_clear_all">Clear All</string>
+    <string name="cart_complete_order">COMPLETE ORDER</string>
     <string name="multiplier">X</string>
     <string name="back_to_items">BACK TO ITEMS</string>
     <string name="add_to_cart">ADD TO CART</string>
@@ -52,4 +52,5 @@
     <string name="sign_up_location">Verify location on map</string>
     <string name="sign_up_btn">Sign up</string>
     <string name="sign_up_subtitle_2">Personal info.</string>
+    <string name="sign_up_welcome">Welcome!</string>
 </resources>

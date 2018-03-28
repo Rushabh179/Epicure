@@ -114,11 +114,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         prepareData();
 
         // Find views
-        drawer = findViewById(R.id.dlMain);
-        txtTotal = findViewById(R.id.txtTotal);
-        rvOrder = findViewById(R.id.rvOrder);
-        txtClearAll = findViewById(R.id.txtClearAll);
-        btnCompleteOrder = findViewById(R.id.btnCompleteOrder);
+        drawer = findViewById(R.id.drawerLayout_cart);
+        txtTotal = findViewById(R.id.text_total);
+        rvOrder = findViewById(R.id.recyclerView_cart_order);
+        txtClearAll = findViewById(R.id.text_cart_clear);
+        btnCompleteOrder = findViewById(R.id.btn_cart_complete_order);
 
         // set
         rvOrder.setLayoutManager(new LinearLayoutManager(ItemActivity.this));
@@ -126,13 +126,13 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         rvOrder.setAdapter(orderAdapter);
 
         // Get the ViewPager and set it's CategoryPagerAdapter so that it can display items
-        ViewPager vpItem = findViewById(R.id.vpItem);
+        ViewPager vpItem = findViewById(R.id.viewPager_item);
         CategoryPagerAdapter categoryPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(), ItemActivity.this, solutionList);
         vpItem.setOffscreenPageLimit(categoryPagerAdapter.getCount());
         vpItem.setAdapter(categoryPagerAdapter);
 
         // Give the TabLayout the ViewPager
-        TabLayout tabCategory = findViewById(R.id.tabCategory);
+        TabLayout tabCategory = findViewById(R.id.tab_category);
         tabCategory.setupWithViewPager(vpItem);
 
         for (int i = 0; i < tabCategory.getTabCount(); i++) {
@@ -649,7 +649,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         } else {
             builder = new AlertDialog.Builder(ItemActivity.this);
         }
-        builder.setTitle(R.string.clear_all)
+        builder.setTitle(R.string.cart_clear_all)
                 .setMessage(R.string.delete_all_orders)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -675,7 +675,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         } else {
             builder = new AlertDialog.Builder(ItemActivity.this);
         }
-        builder.setTitle(getString(R.string.complete_order))
+        builder.setTitle(getString(R.string.cart_complete_order))
                 .setMessage(getString(R.string.complete_order_question))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
