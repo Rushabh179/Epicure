@@ -1,4 +1,4 @@
-package com.project.rushabh.epicure.fragment;
+package com.project.rushabh.epicure.test;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,29 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
- * Created by rushabh.modi on 27/03/18.
+ * Created by rushabh.modi on 29/03/18.
  */
 
-// A placeholder fragment containing a simple view.
-public class SignUpPlaceHolderFragment extends Fragment {
-
-    // The fragment argument representing the section number for this fragment.
+public class SignUpFragment3 extends Fragment {
     private static final String ARG_FRAGMENT_RESOURCE = "fragment_resourse";
     private static final String ARG_SECTION_NUMBER = "section_number";
-    public View view;
-    OnGetAccountViewListener onGetViewListener;
 
-    public SignUpPlaceHolderFragment() {
-    }
+    OnGetWelocomeViewListener onGetViewListener;
 
-    // Returns a new instance of this fragment for the given section number.
-    public static SignUpPlaceHolderFragment newInstance(int fragmentResource, int sectionNumber) {
-        SignUpPlaceHolderFragment fragment = new SignUpPlaceHolderFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_FRAGMENT_RESOURCE, fragmentResource);
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+    public SignUpFragment3() {
     }
 
     @Override
@@ -41,10 +28,20 @@ public class SignUpPlaceHolderFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            onGetViewListener = (OnGetAccountViewListener) getActivity();
+            onGetViewListener = (OnGetWelocomeViewListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException("Error in retrieving data. Please try again");
         }
+    }
+
+    // Returns a new instance of this fragment for the given section number.
+    public static SignUpFragment3 newInstance(int fragmentResource, int sectionNumber) {
+        SignUpFragment3 fragment = new SignUpFragment3();
+        Bundle args = new Bundle();
+        args.putInt(ARG_FRAGMENT_RESOURCE, fragmentResource);
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -60,10 +57,10 @@ public class SignUpPlaceHolderFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        onGetViewListener.getAccountView(view);
+        onGetViewListener.getWelocomeView(view);
     }
 
-    public interface OnGetAccountViewListener {
-        void getAccountView(View view);
+    public interface OnGetWelocomeViewListener {
+        void getWelocomeView(View view);
     }
 }

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
+import com.project.rushabh.epicure.test.SignUpFragment3;
+import com.project.rushabh.epicure.test.SignUpFragment2;
 
 /**
  * Created by rushabh.modi on 27/03/18.
@@ -23,9 +25,9 @@ public class SignUpSectionPagerAdaper extends FragmentPagerAdapter {
             case 0:
                 return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_1, position);
             case 1:
-                return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_2, position);
+                return SignUpFragment2.newInstance(R.layout.fragment_sign_up_2, position);
             case 2:
-                return SignUpPlaceHolderFragment.newInstance(R.layout.fragment_sign_up_3, position);
+                return SignUpFragment3.newInstance(R.layout.fragment_sign_up_3, position);
         }
         return null;
     }
