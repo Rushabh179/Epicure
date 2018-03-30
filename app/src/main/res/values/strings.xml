@@ -53,4 +53,12 @@
     <string name="sign_up_btn">Sign up</string>
     <string name="sign_up_subtitle_2">Personal info.</string>
     <string name="sign_up_welcome">Welcome!</string>
+    <string name="spk_name">spk_name</string>
+    <string name="spk_email">spk_email</string>
+    <string name="spk_password">spk_password</string>
+    <string name="spk_latitude">spk_latitude</string>
+    <string name="spk_longitude">spk_longitude</string>
+    <string name="location_send_btn">Send location</string>
+    <string name="spk_contact">spk_contact</string>
+    <string name="spk_address">spk_address</string>
 </resources>

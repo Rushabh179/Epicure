@@ -32,7 +32,10 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
 
     private Button locationSignUpBtn, signUpBtn;
 
-    private SharedPreferences sharedPreferences;
+    private double latitudeSignUp = -1, longitudeSignUp = -1;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     private View accountView, personalView, welcomeView;
 
@@ -55,6 +58,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
         subTitleText = findViewById(R.id.text_signup_sub_title);
         nextText = findViewById(R.id.text_signup_next);
         previousText = findViewById(R.id.text_signup_previous);
+
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
 
         previousText.setVisibility(View.INVISIBLE);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -100,7 +105,23 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                     else if (!passwordSignUpText.getText().toString().equals(retypeSignUpText.getText().toString()))
                         Toast.makeText(this, "Passwords don't match", Toast.LENGTH_SHORT).show();
                     else {
-
+                        editor = sharedPreferences.edit();
+                        editor.putString(getString(R.string.spk_name), nameSignUpText.getText().toString());
+                        editor.putString(getString(R.string.spk_email), emailSignUpText.getText().toString());
+                        editor.putString(getString(R.string.spk_password), passwordSignUpText.getText().toString());
+                        editor.apply();
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                    }
+                } else if (viewPager.getCurrentItem() == 1) {
+                    if (TextUtils.isEmpty(contactSignUpText.getText()) || TextUtils.isEmpty(addressSignUpText.getText()) || latitudeSignUp == -1 || longitudeSignUp == -1) {
+                        Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show();
+                    } else {
+                        editor = sharedPreferences.edit();
+                        editor.putString(getString(R.string.spk_contact), contactSignUpText.getText().toString());
+                        editor.putString(getString(R.string.spk_address), addressSignUpText.getText().toString());
+                        editor.putFloat(getString(R.string.spk_latitude), (float) latitudeSignUp);
+                        editor.putFloat(getString(R.string.spk_longitude), (float) longitudeSignUp);
+                        editor.apply();
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                     }
                 }
@@ -132,7 +153,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
         locationSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), MapsActivity.class));
+                startActivityForResult(new Intent(getBaseContext(), MapsActivity.class).putExtra("source", "signup"), 5);
             }
         });
     }
@@ -141,5 +162,29 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
     public void getWelocomeView(View view) {
         welcomeView = view;
         signUpBtn = welcomeView.findViewById(R.id.btn_sign_up); //2
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String allData = sharedPreferences.getString(getString(R.string.spk_name),"") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_email),"") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_password),"") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_contact),"") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_address),"") + "\n"
+                        + sharedPreferences.getFloat(getString(R.string.spk_latitude), 0) + "\n"
+                        + sharedPreferences.getFloat(getString(R.string.spk_longitude),0) + "\n";
+                Toast.makeText(SignUpActivity.this, allData , Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpActivity.this, allData , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 5) {
+            latitudeSignUp = data.getDoubleExtra("latitude", 0);
+            longitudeSignUp = data.getDoubleExtra("longitude", 0);
+            //Toast.makeText(this, Double.toString(latitudeSignUp), Toast.LENGTH_SHORT).show();
+        }
     }
 }

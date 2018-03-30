@@ -83,6 +83,7 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
                 @Override
                 public void onClick(View view) {
                     context.startActivity(new Intent(context, MapsActivity.class)
+                            .putExtra("source", "places")
                             .putExtra("latitude", placesLocationList.get(getAdapterPosition()).getLatitude())
                             .putExtra("longitude", placesLocationList.get(getAdapterPosition()).getLongitude()));
                 }

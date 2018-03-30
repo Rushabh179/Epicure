@@ -25,3 +25,8 @@ https://stackoverflow.com/questions/9650265/how-do-disable-paging-by-swiping-wit
 
 Multi-page registration form:
 https://stackoverflow.com/questions/30072836/conditional-wizard-initialization-with-viewpager
+
+Getting last location and permission:
+https://github.com/googlesamples/android-play-location
+fusedlocationproviderclient vs googleclient
+https://android-developers.googleblog.com/2017/06/reduce-friction-with-new-location-apis.html
