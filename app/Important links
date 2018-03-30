@@ -30,3 +30,12 @@ Getting last location and permission:
 https://github.com/googlesamples/android-play-location
 fusedlocationproviderclient vs googleclient
 https://android-developers.googleblog.com/2017/06/reduce-friction-with-new-location-apis.html
+
+Firebase registration/auth:
+https://www.androidhive.info/2016/06/android-getting-started-firebase-simple-login-registration-auth/
+Firebase databse:
+https://www.androidhive.info/2016/10/android-working-with-firebase-realtime-database/
+Console:
+https://console.firebase.google.com/project/epicure-1520431951896/database/firestore/data~2Frestaurants~2F8zxhF28iTLXBgyzKyi3X~2Fitems
+https://firebase.google.com/docs/firestore/query-data/get-data
+https://firebase.google.com/docs/firestore/security/get-started?authuser=0
