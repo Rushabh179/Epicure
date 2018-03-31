@@ -214,25 +214,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         subCategoryList.add(new SubCategory(8, 3, "Coffee"));
         subCategoryList.add(new SubCategory(9, 3, "Fruit Juice"));
 
-        /*categoryList.add(new Category(4, "Clothing & Accessories", R.drawable.clothing));TODO: Extra categories
-        subCategoryList.add(new SubCategory(10, 4, "T-Shirt"));
-        subCategoryList.add(new SubCategory(11, 4, "Jean"));
-        subCategoryList.add(new SubCategory(12, 4, "Jacket"));
-        subCategoryList.add(new SubCategory(13, 4, "Polo"));
-        subCategoryList.add(new SubCategory(14, 4, "Short"));
-        subCategoryList.add(new SubCategory(15, 4, "Sweatshirt"));
-        subCategoryList.add(new SubCategory(16, 4, "Shoes"));
-        subCategoryList.add(new SubCategory(17, 4, "Accessories"));
-
-        categoryList.add(new Category(5, "Technology", R.drawable.technology));
-        subCategoryList.add(new SubCategory(18, 5, "Computer"));
-        subCategoryList.add(new SubCategory(19, 5, "Tablet"));
-        subCategoryList.add(new SubCategory(20, 5, "Cell Phone"));
-        subCategoryList.add(new SubCategory(21, 5, "TV & Video"));
-        subCategoryList.add(new SubCategory(22, 5, "Camera & Photo"));
-        subCategoryList.add(new SubCategory(23, 5, "Video Game"));
-        subCategoryList.add(new SubCategory(24, 5, "Wearable"));*/
-
         //Hamburger
         itemList.add(new Item(1, 2, 1, "Ultimate Hamburger", 5.0, "https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/pass/the-ultimate-hamburger.jpg"));
         itemList.add(new Item(2, 2, 1, "Double Cheese Burger", 7.0, "https://1.bp.blogspot.com/-i2e3XPfVwYw/V9GgRgn2Y3I/AAAAAAAAxeM/Ih2LoXrSQr0NBgFKLeupxYNzwGZXBv1VwCLcB/s1600/Hardees-Classic-Double-Cheeseburger.jpg"));
@@ -274,80 +255,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList.add(new Item(22, 3, 9, "Mixed Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791763.jpg"));
         itemList.add(new Item(23, 3, 9, "Apricot Fruit Juice", 1.0, "http://cdn.avansas.com/assets/53313/cappy-meyve-suyu-kayisi-1-lt-0-zoom.jpg"));
         itemList.add(new Item(24, 3, 9, "Orange Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791980.jpg"));
-
-        /*//Tshirt TODO: extra subcategories
-        itemList.add(new Item(25, 4, 10, "Black T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0628_1.jpg"));
-        itemList.add(new Item(26, 4, 10, "Blue T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0428_1.jpg"));
-        itemList.add(new Item(27, 4, 10, "White T-Shirt", 20.0, "https://www.kaft.com/static/images/tee/0603_1.jpg"));
-
-        //Jean
-        itemList.add(new Item(28, 4, 11, "Blue Jean", 30.0, "https://sky-static.mavi.com/sys-master/maviTrImages/h61/h8c/8959419908126/0037823516_image_3.jpg_Default-MainProductImage"));
-        itemList.add(new Item(29, 4, 11, "Dark Colored Jean", 30.0, "https://www.mensfitness.com/sites/mensfitness.com/files/styles/gallery_slideshow_image/public/1280-nudie-lean-jean.jpg?itok=rFDKRlFd"));
-
-        //Jacket
-        itemList.add(new Item(30, 4, 12, "Winter Jacket", 90.0, "https://images.thenorthface.com/is/image/TheNorthFace/NF0A2TCN_7D6_hero?$PDP-SCHEMA$"));
-        itemList.add(new Item(31, 4, 12, "Leather Jacket", 110.0, "https://www.revzilla.com/product_images/0091/7906/scorpion1909_leather_jacket_black.jpg"));
-
-        //polo
-        itemList.add(new Item(32, 4, 13, "White Polo Shirt", 30.99, "https://www.hemington.com.tr/beyaz-triko-polo-giza-pamuk-tshirt-5513-86-B.jpg"));
-        itemList.add(new Item(33, 4, 13, "Fernando Muslera", 999.99, "http://cdn.gsstore.org/UPLOAD/PRODUCT/thumb/K023-E75365_401_1_large.JPG"));
-
-        //Short
-        itemList.add(new Item(34, 4, 14, "Galatasaray Short", 999.99, "http://static.barcin.com/web/images/products/659037-628/nike-galatasaray-2015-2016-sezonu-dis-saha-erkek-sort-original-big.jpg"));
-        itemList.add(new Item(35, 4, 14, "LeBron Basketball Short", 40.0, "http://www.swishbasketball.co.uk/media/catalog/product/cache/1/image/1500x/b661d95dd61f6b4c6be8ac50936dce4f/n/k/nk-718924-657_1.jpg"));
-
-        //Sweatshirt
-        itemList.add(new Item(36, 4, 15, "NY Sweatshirt", 50.99, "https://www.aksesuarix.com/images/products/03/18/21/31821_buyuk.jpg"));
-        itemList.add(new Item(37, 4, 15, "Disnet Women Sweatshirt", 45.50, "https://uniqlo.scene7.com/is/image/UNIQLO/goods_09_182987"));
-
-        //Shoes
-        itemList.add(new Item(38, 4, 16, "Vans Shoes", 67.30, "https://m.media-amazon.com/images/G/01/2017/home/october2017/3424427-p-MULTIVIEW._CB514432018_.jpg"));
-        itemList.add(new Item(39, 4, 16, "Converse All Star", 55.44, "https://m.media-amazon.com/images/G/01/zappos/landing/pages/mensclothing/MelodyTest1/MensShoes1._V506596164_.jpg"));
-
-        //Accessories
-        itemList.add(new Item(40, 4, 17, "Silver Bracelet", 220.0, "https://www.brighton.com/photos/product/giant/369560S17291/-/size-os.jpg"));
-        itemList.add(new Item(41, 4, 17, "Gold Bracelet", 330.0, "http://scene7.zumiez.com/is/image/zumiez/pdp_hero/The-Gold-Gods-Gold-Cuban-Link-Bracelet-_244592-front.jpg"));
-        itemList.add(new Item(42, 4, 17, "Leather Bracelet", 30.0, "https://images-na.ssl-images-amazon.com/images/I/71TtlBcKFWL._UL1500_.jpg"));
-
-        //Computer
-        itemList.add(new Item(43, 5, 18, "Apple iMac i5", 1710.0, "https://www.apple.com/v/imac/e/images/overview/og_image.png?201709270947"));
-        itemList.add(new Item(44, 5, 18, "Apple MacBook i7", 1200.0, "https://brain-images-ssl.cdn.dixons.com/3/2/10165823/l_10165823_001.jpg"));
-
-        //tablet
-        itemList.add(new Item(45, 5, 19, "Galaxy 8inch Tablet", 660.0, "http://images.samsung.com/is/image/samsung/p5/tr/tablets/galaxy-tab-s2-001.png?$ORIGIN_PNG$"));
-        itemList.add(new Item(46, 5, 19, "Asus ZenPad 10inch", 340.0, "https://images-na.ssl-images-amazon.com/images/I/91aibqJgIDL._SL1500_.jpg"));
-        itemList.add(new Item(47, 5, 19, "iPad Mini 4", 780.0, "https://www.bhphotovideo.com/images/images2500x2500/apple_mk9n2ll_a_128gb_ipad_mini_4_1185478.jpg"));
-        itemList.add(new Item(48, 5, 19, "iPad Pro", 1110.0, "https://www.bhphotovideo.com/images/images2500x2500/apple_mlmv2ll_a_9_7_ipad_pro_128gb_1241265.jpg"));
-
-        //Cell Phone
-        itemList.add(new Item(49, 5, 20, "Samsung S8", 555.0, "https://s7d2.scene7.com/is/image/SamsungUS/GS8_Front_20170712?$product-details-jpg$"));
-        itemList.add(new Item(50, 5, 20, "iPhone 7", 660.0, "https://centrecomstatic.s3.amazonaws.com/images/upload/0038722_0.png"));
-        itemList.add(new Item(51, 5, 20, "iPhone X", 1259.00, "https://cdn.macrumors.com/article-new/2017/09/iphonexdesign.jpg"));
-        itemList.add(new Item(52, 5, 20, "LG G6", 440.0, "http://www.lg.com/au/images/smartphones/MD05812152/gallery/G6-medium06.jpg"));
-        itemList.add(new Item(53, 5, 20, "Xiaomi Mi Mix 2", 350.0, "https://image4.geekbuying.com/ggo_pic/2017-09-11/Xiaomi-Mi-Mix-2-5-99-Inch-6GB-64GB-Smartphone-Black-465274-.jpg"));
-        itemList.add(new Item(54, 5, 20, "Galaxy Note 8", 880.0, "https://images-na.ssl-images-amazon.com/images/I/41GZvrGM5bL.jpg"));
-
-        //TV
-        itemList.add(new Item(55, 5, 21, "Samsung 40inch TV", 330.0, "https://multimedia.bbycastatic.ca/multimedia/products/1500x1500/103/10317/10317673.jpg"));
-
-        //Camera
-        itemList.add(new Item(56, 5, 22, "Canon EOS 650D", 925.0, "https://shop.usa.canon.com/wcsstore/ExtendedSitesCatalogAssetStore/eos-t7i-18-55_1_xl.jpg"));
-        itemList.add(new Item(57, 5, 22, "Go Pro 5", 1300.0, "https://www.bhphotovideo.com/images/images2500x2500/gopro_chdhx_501_hero5_black_1274419.jpg"));
-        itemList.add(new Item(58, 5, 22, "Nikon 5600D", 800.0, "https://cdn-4.nikon-cdn.com/e/Q5NM96RZZo-YRYNeYvAi9beHK4x3L-8go_p7JUL6JpQM8B_IxDfxyg==/Views/1575_D5600_left.png"));
-
-        //Video Game
-        itemList.add(new Item(59, 5, 23, "Playstation 4 Pro", 420.99, "https://rukminim1.flixcart.com/image/1408/1408/gamingconsole/g/a/t/playstation-4-ps4-500-sony-dualshock-4-controller-original-imadrhehpvvetkgf.jpeg?q=90"));
-        itemList.add(new Item(60, 5, 23, "FİFA 18", 40.0, "https://compass-ssl.xbox.com/assets/79/b1/79b130b1-d2a5-4858-98c8-5eecc16902bf.jpg?n=FF18_GLP-Page-Hero-1084_1920x600_02.jpg"));
-        itemList.add(new Item(61, 5, 23, "NBA 2K 18", 40.0, "https://static-ca.ebgames.ca/images/products/731461/3max.jpg"));
-        itemList.add(new Item(62, 5, 23, "Footbal Manager 18", 40.0, "http://www-footballmanager-com-18-public.s3.amazonaws.com/footballmanager/news/fm_2018_release_date_7.png"));
-        itemList.add(new Item(64, 5, 23, "Playstation 4 Controller", 30.0, "http://media.4rgos.it/i/Argos/6257637_R_Z001A?$Web$&$DefaultPDP570$&$WebPDPBadge570$&topright=empty&bottomleft=empty"));
-        itemList.add(new Item(65, 5, 23, "Call of Duty WW2", 40.0, "https://img.bolumsonucanavari.com/images/Upload/2dbedeb3-21a7-4294-8940-7ab68832e3f2.jpg"));
-
-        //Wearable
-        itemList.add(new Item(66, 5, 24, "Galaxy Gear S2", 220.0, "http://media.4rgos.it/i/Argos/5207042_R_Z002A?$Web$&$DefaultPDP570$"));
-        itemList.add(new Item(67, 5, 24, "Galaxy Gear S3", 330.0, "http://www.samsung.com/global/galaxy/gear-s3/images/gear-s3-highlights_design_ft.jpg"));
-        itemList.add(new Item(68, 5, 24, "Apple Watch", 440.0, "https://brain-images-ssl.cdn.dixons.com/2/9/10151992/l_10151992_001.jpg"));
-        itemList.add(new Item(69, 5, 24, "Xiaomi Mi Band 2", 20.0, "https://image4.geekbuying.com/ggo_pic/2016-06-03/201606309322239menyh.jpg"));*/
 
         /*
         * Populates solutionList.

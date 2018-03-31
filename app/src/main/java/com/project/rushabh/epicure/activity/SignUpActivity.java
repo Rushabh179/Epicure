@@ -3,6 +3,7 @@ package com.project.rushabh.epicure.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.SignUpSectionPagerAdaper;
 import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
@@ -34,8 +39,10 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
 
     private double latitudeSignUp = -1, longitudeSignUp = -1;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private FirebaseAuth firebaseAuth;
 
     private View accountView, personalView, welcomeView;
 
@@ -47,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
+        firebaseAuth = FirebaseAuth.getInstance();
         sectionsPagerAdapter = new SignUpSectionPagerAdaper(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -165,15 +173,29 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String allData = sharedPreferences.getString(getString(R.string.spk_name),"") + "\n"
-                        + sharedPreferences.getString(getString(R.string.spk_email),"") + "\n"
-                        + sharedPreferences.getString(getString(R.string.spk_password),"") + "\n"
-                        + sharedPreferences.getString(getString(R.string.spk_contact),"") + "\n"
-                        + sharedPreferences.getString(getString(R.string.spk_address),"") + "\n"
+                String allData = sharedPreferences.getString(getString(R.string.spk_name), "") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_email), "") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_password), "") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_contact), "") + "\n"
+                        + sharedPreferences.getString(getString(R.string.spk_address), "") + "\n"
                         + sharedPreferences.getFloat(getString(R.string.spk_latitude), 0) + "\n"
-                        + sharedPreferences.getFloat(getString(R.string.spk_longitude),0) + "\n";
-                Toast.makeText(SignUpActivity.this, allData , Toast.LENGTH_LONG).show();
-                Toast.makeText(SignUpActivity.this, allData , Toast.LENGTH_LONG).show();
+                        + sharedPreferences.getFloat(getString(R.string.spk_longitude), 0) + "\n";
+                Toast.makeText(SignUpActivity.this, allData, Toast.LENGTH_LONG).show();
+                firebaseAuth.createUserWithEmailAndPassword(
+                        sharedPreferences.getString(getString(R.string.spk_email), ""), sharedPreferences.getString(getString(R.string.spk_password), ""))
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        });
             }
         });
     }

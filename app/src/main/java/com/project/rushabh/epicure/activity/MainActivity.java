@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.fragment.PlacesFragment;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_item_5) {
             editor = sharedPreferences.edit();
+            FirebaseAuth.getInstance().signOut();
             editor.putBoolean(getString(R.string.is_logged_in), false).apply();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
