@@ -217,6 +217,22 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         orderList = new ArrayList<>();
 
         itemNameList = new ArrayList<>();
+
+        db.collection("restaurants").document(placeId).collection("category")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //itemNameList.add(document.getString("name"));
+                                //categoryList.add(new Category((int) ((long) document.get("id")), document.getString("name"), R.drawable.all));
+                                Toast.makeText(ItemActivity.this,Integer.toString((int) ((long) document.get("id"))), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
         db.collection("restaurants").document(placeId).collection("items")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

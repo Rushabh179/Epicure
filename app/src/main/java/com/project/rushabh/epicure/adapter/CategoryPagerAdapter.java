@@ -23,38 +23,32 @@ import java.util.List;
  * can return to the page.
  */
 
-public class CategoryPagerAdapter extends FragmentPagerAdapter
-{
+public class CategoryPagerAdapter extends FragmentPagerAdapter {
     private List<Solution> solutionList = new ArrayList<>();
     private Context context;
 
-    public CategoryPagerAdapter(FragmentManager manager, Context context, ArrayList<Solution> solutionList)
-    {
+    public CategoryPagerAdapter(FragmentManager manager, Context context, ArrayList<Solution> solutionList) {
         super(manager);
         this.solutionList = solutionList;
         this.context = context;
     }
 
     @Override
-    public Fragment getItem(int position)
-    {
+    public Fragment getItem(int position) {
         return ItemFragment.newInstance(solutionList.get(position));
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return solutionList.size();
     }
 
     @Override
-    public CharSequence getPageTitle(int position)
-    {
+    public CharSequence getPageTitle(int position) {
         return solutionList.get(position).category.name;
     }
 
-    public View getTabView(final int position)
-    {
+    public View getTabView(final int position) {
         // Given you have a custom layout in `res/layout/tab_item.xml` with a TextView and ImageView
         @SuppressLint("InflateParams") View v = LayoutInflater.from(context).inflate(R.layout.tab_item, null);
 
