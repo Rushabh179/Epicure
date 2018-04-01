@@ -14,8 +14,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.GeoPoint;
 import com.project.rushabh.epicure.R;
-import com.project.rushabh.epicure.activity.ItemActivity;
 import com.project.rushabh.epicure.activity.MapsActivity;
+import com.project.rushabh.epicure.interfaces.OnRecyclerClickListener;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
     private List<String> placesNameList, placesInformationList, placesImageList;
     private List<GeoPoint> placesLocationList;
     private Context context;
+    private OnRecyclerClickListener onRecyclerClickListener;
 
     public PlacesRecyclerViewAdapter(Context context, List<List<String>> placesLists, List<GeoPoint> placesLocationList) {
         this.context = context;
@@ -37,6 +38,10 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
         placesInformationList = placesLists.get(1);
         placesImageList = placesLists.get(2);
         this.placesLocationList = placesLocationList;
+    }
+
+    public void setOnRecyclerClickListener(OnRecyclerClickListener onRecyclerClickListener) {
+        this.onRecyclerClickListener = onRecyclerClickListener;
     }
 
     @NonNull
@@ -75,7 +80,19 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context, Integer.toString(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                    context.startActivity(new Intent(context, ItemActivity.class));
+                    //context.startActivity(new Intent(context, ItemActivity.class));
+                    if (onRecyclerClickListener != null) {
+                        onRecyclerClickListener.onRecyclerClick(view, getAdapterPosition());
+                    }
+                }
+            });
+
+            placesDetailsText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onRecyclerClickListener != null) {
+                        onRecyclerClickListener.onRecyclerClick(view, getAdapterPosition());
+                    }
                 }
             });
 

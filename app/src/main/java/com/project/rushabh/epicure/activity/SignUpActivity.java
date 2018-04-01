@@ -21,8 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.SignUpSectionPagerAdaper;
 import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
-import com.project.rushabh.epicure.test.SignUpFragment2;
-import com.project.rushabh.epicure.test.SignUpFragment3;
+import com.project.rushabh.epicure.fragment.SignUpFragment2;
+import com.project.rushabh.epicure.fragment.SignUpFragment3;
 import com.project.rushabh.epicure.util.NonSwipeableViewPager;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHolderFragment.OnGetAccountViewListener, SignUpFragment2.OnGetPersonalViewListener, SignUpFragment3.OnGetWelocomeViewListener {
@@ -121,7 +121,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                     }
                 } else if (viewPager.getCurrentItem() == 1) {
-                    if (TextUtils.isEmpty(contactSignUpText.getText()) || TextUtils.isEmpty(addressSignUpText.getText()) || latitudeSignUp == -1 || longitudeSignUp == -1) {
+                    if (TextUtils.isEmpty(contactSignUpText.getText()) || TextUtils.isEmpty(addressSignUpText.getText())) { //|| latitudeSignUp == -1 || longitudeSignUp == -1) {
                         Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show();
                     } else {
                         editor = sharedPreferences.edit();

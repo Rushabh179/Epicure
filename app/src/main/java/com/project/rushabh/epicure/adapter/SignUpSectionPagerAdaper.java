@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
-import com.project.rushabh.epicure.test.SignUpFragment3;
-import com.project.rushabh.epicure.test.SignUpFragment2;
+import com.project.rushabh.epicure.fragment.SignUpFragment3;
+import com.project.rushabh.epicure.fragment.SignUpFragment2;
 
 /**
  * Created by rushabh.modi on 27/03/18.

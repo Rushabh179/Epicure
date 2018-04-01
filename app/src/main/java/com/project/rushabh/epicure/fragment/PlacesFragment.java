@@ -1,5 +1,6 @@
 package com.project.rushabh.epicure.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,21 +20,25 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.epicure.R;
+import com.project.rushabh.epicure.activity.ItemActivity;
 import com.project.rushabh.epicure.adapter.PlacesRecyclerViewAdapter;
+import com.project.rushabh.epicure.interfaces.OnRecyclerClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlacesFragment extends Fragment {
+public class PlacesFragment extends Fragment implements OnRecyclerClickListener {
 
     private RecyclerView placesRecyclerView;
     private PlacesRecyclerViewAdapter placesRecyclerViewAdapter;
-    private List<String> placesNameList, placesInformationList, placesImageList;
+    private List<String> placesNameList, placesInformationList, placesImageList, placesIdList;
     private List<GeoPoint> placesLocationList;
     private DividerItemDecoration decoration;
     private List<List<String>> placesLists;
 
-    FirebaseFirestore db;
+    private OnRecyclerClickListener onRecyclerClickListener;
+
+    private FirebaseFirestore db;
 
     public PlacesFragment() {
     }
@@ -42,12 +47,14 @@ public class PlacesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        placesIdList = new ArrayList<>();
         placesNameList = new ArrayList<>();
         placesInformationList = new ArrayList<>();
         placesImageList = new ArrayList<>();
         placesLists = new ArrayList<>();
         placesLocationList = new ArrayList<>();
 
+        onRecyclerClickListener = this;
         db = FirebaseFirestore.getInstance();
     }
 
@@ -68,8 +75,7 @@ public class PlacesFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                                //Toast.makeText(getContext(), document.getString("name"), Toast.LENGTH_SHORT).show();
+                                placesIdList.add(document.getId());
                                 placesNameList.add(document.getString("name"));
                                 placesInformationList.add(document.getString("information"));
                                 placesImageList.add(document.getString("image"));
@@ -80,6 +86,7 @@ public class PlacesFragment extends Fragment {
                             placesLists.add(placesImageList);
 
                             placesRecyclerViewAdapter = new PlacesRecyclerViewAdapter(getContext(), placesLists, placesLocationList);
+                            placesRecyclerViewAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
                             placesRecyclerView.setAdapter(placesRecyclerViewAdapter);
                         } else {
                             Toast.makeText(getContext(), "Error getting documents", Toast.LENGTH_SHORT).show();
@@ -87,8 +94,11 @@ public class PlacesFragment extends Fragment {
                         }
                     }
                 });
-
         return view;
     }
 
+    @Override
+    public void onRecyclerClick(View view, int position) {
+        startActivity(new Intent(getContext(), ItemActivity.class).putExtra("restaurant_id", placesIdList.get(position)));
+    }
 }

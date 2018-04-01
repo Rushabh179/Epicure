@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -24,8 +26,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.CategoryPagerAdapter;
 import com.project.rushabh.epicure.adapter.ItemAdapter;
@@ -43,7 +51,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback, OrderAdapter.IOrderAdapterCallback {
+public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback,
+        OrderAdapter.IOrderAdapterCallback {
 
     private DrawerLayout drawer;
     private ConstraintLayout rlCart;
@@ -53,28 +62,30 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     private TextView txtClearAll;
     private Button btnCompleteOrder;
     private ProgressDialog dialog;
+
     private OrderAdapter orderAdapter;
+
+    private Intent intent;
+    private String placeId;
+    private FirebaseFirestore db;
+    private ArrayList<String> itemNameList;
 
     /*
     * Holds all categories
     */
     private ArrayList<Category> categoryList;
-
     /*
     * Holds all sub-categories
     */
     private ArrayList<SubCategory> subCategoryList;
-
     /*
     * Holds all items
     */
     private ArrayList<Item> itemList;
-
     /*
     * Holds all solutions
     */
     private ArrayList<Solution> solutionList;
-
     /*
     * Holds the data that are added to cart
     */
@@ -110,6 +121,12 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+
+        db = FirebaseFirestore.getInstance();
+
+        intent = getIntent();
+        placeId = intent.getStringExtra("restaurant_id");
+        //Toast.makeText(this, intent.getStringExtra("restaurant_id"), Toast.LENGTH_SHORT).show();
 
         prepareData();
 
@@ -198,6 +215,21 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList = new ArrayList<>();
         solutionList = new ArrayList<>();
         orderList = new ArrayList<>();
+
+        itemNameList = new ArrayList<>();
+        db.collection("restaurants").document(placeId).collection("items")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                itemNameList.add(document.getString("name"));
+                            }
+                            Toast.makeText(ItemActivity.this, itemNameList.get(0), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
         categoryList.add(new Category(1, "All", R.drawable.all));
 
@@ -303,7 +335,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 tempSubCategoryList.add(new SubCategory(subCategory));
             }
         }
-
         return tempSubCategoryList;
     }
 
@@ -344,7 +375,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 tempItemList.add(item);
             }
         }
-
         return tempItemList;
     }
 
@@ -362,7 +392,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (SubCategory subCategory : subCategoryList) {
             itemMap.put(subCategory, getItemListBySubCategoryId(subCategory.id));
         }
-
         return itemMap;
     }
 
@@ -520,9 +549,9 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (Order order : orderList) {
             total += order.extendedPrice;
         }
-
         return total;
     }
+
 
     /*
     * Updates the total price of all products added to the cart

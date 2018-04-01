@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     editor = sharedPreferences.edit();
                                     editor.putBoolean(getString(R.string.is_logged_in), true).apply();
+                                    Toast.makeText(LoginActivity.this, "signed in", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
