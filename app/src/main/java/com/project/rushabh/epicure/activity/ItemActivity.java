@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
@@ -261,7 +260,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             // Temporary list of the current sıb-categories
             ArrayList<SubCategory> tempSubCategoryList;
             Log.d("order of the calls", "for loop");
-            Toast.makeText(ItemActivity.this, "called", Toast.LENGTH_SHORT).show();
 
             // Temporary list of the current items
             ArrayList<Item> tempItemList;
@@ -283,7 +281,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 solutionList.add(new Solution(categoryItem, tempSubCategoryList, tempItemList, itemMap));
             }
         }
-
     }
 
     /**
