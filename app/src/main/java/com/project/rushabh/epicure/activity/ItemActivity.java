@@ -225,8 +225,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (QueryDocumentSnapshot document : categoryTask.getResult()) {
             //itemNameList.add(document.getString("name"));
             Log.d("order of the calls", document.getString("name"));
-            categoryList.add(new Category((int) ((long) document.get("id")), document.getString("name"), R.drawable.all));
-            //Toast.makeText(ItemActivity.this, Integer.toString((int) ((long) document.get("id"))), Toast.LENGTH_SHORT).show();
+            categoryList.add(new Category((int) ((long) document.get("id")),
+                    document.getString("name"), R.drawable.all));
         }
 
         Task<QuerySnapshot> subCategoryTask = documentReference.collection("subcategories").get();
@@ -236,7 +236,9 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (QueryDocumentSnapshot document : subCategoryTask.getResult()) {
             Log.d("order of the calls", document.getString("name"));
             //subCategoryList.add(new SubCategory(1, 2, "Hamburger"));
-            subCategoryList.add(new SubCategory((int) ((long) document.get("id")), (int) ((long) document.get("categoryId")), document.getString("name")));
+            subCategoryList.add(new SubCategory((int) ((long) document.get("id")),
+                    (int) ((long) document.get("categoryId")),
+                    document.getString("name")));
         }
 
         Task<QuerySnapshot> itemTask = documentReference.collection("items").get();

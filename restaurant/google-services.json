@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "869924232792",
+    "firebase_url": "https://epicure-1520431951896.firebaseio.com",
+    "project_id": "epicure-1520431951896",
+    "storage_bucket": "epicure-1520431951896.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869924232792:android:7b9e2c076e8ca78f",
+        "android_client_info": {
+          "package_name": "com.project.rushabh.epicure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869924232792-m2sjag19re3amh329kupuge58m703787.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBam-ScEv0gKozJpVEKnibTUqYaLuRan44"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869924232792:android:8506b2414fec3945",
+        "android_client_info": {
+          "package_name": "com.project.rushabh.restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869924232792-m2sjag19re3amh329kupuge58m703787.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBam-ScEv0gKozJpVEKnibTUqYaLuRan44"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

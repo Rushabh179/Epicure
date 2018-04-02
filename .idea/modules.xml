@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Epicure.iml" filepath="$PROJECT_DIR$/Epicure.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restaurant/restaurant.iml" filepath="$PROJECT_DIR$/restaurant/restaurant.iml" />
     </modules>
   </component>
 </project>
