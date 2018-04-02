@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -20,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -29,8 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -68,7 +68,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     private Intent intent;
     private String placeId;
     private FirebaseFirestore db;
-    private ArrayList<String> itemNameList;
+    private DocumentReference documentReference;
 
     /*
     * Holds all categories
@@ -122,13 +122,14 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-        db = FirebaseFirestore.getInstance();
-
         intent = getIntent();
         placeId = intent.getStringExtra("restaurant_id");
+        db = FirebaseFirestore.getInstance();
+        documentReference = db.collection("restaurants").document(placeId);
         //Toast.makeText(this, intent.getStringExtra("restaurant_id"), Toast.LENGTH_SHORT).show();
 
         prepareData();
+        Log.d("order of the calls", "oncreate after preparedata");
 
         // Find views
         drawer = findViewById(R.id.drawerLayout_cart);
@@ -216,9 +217,86 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         solutionList = new ArrayList<>();
         orderList = new ArrayList<>();
 
-        itemNameList = new ArrayList<>();
+        Task<QuerySnapshot> categoryTask = documentReference.collection("category").get();
+        Log.d("order of the calls", "before category");
+        while (!categoryTask.isSuccessful()) {
+            //do nothing
+        }
+        for (QueryDocumentSnapshot document : categoryTask.getResult()) {
+            //itemNameList.add(document.getString("name"));
+            Log.d("order of the calls", document.getString("name"));
+            categoryList.add(new Category((int) ((long) document.get("id")), document.getString("name"), R.drawable.all));
+            //Toast.makeText(ItemActivity.this, Integer.toString((int) ((long) document.get("id"))), Toast.LENGTH_SHORT).show();
+        }
 
-        db.collection("restaurants").document(placeId).collection("category")
+        Task<QuerySnapshot> subCategoryTask = documentReference.collection("subcategories").get();
+        while (!subCategoryTask.isSuccessful()) {
+            //do nothing
+        }
+        for (QueryDocumentSnapshot document : subCategoryTask.getResult()) {
+            Log.d("order of the calls", document.getString("name"));
+            //subCategoryList.add(new SubCategory(1, 2, "Hamburger"));
+            subCategoryList.add(new SubCategory((int) ((long) document.get("id")), (int) ((long) document.get("categoryId")), document.getString("name")));
+        }
+
+        Task<QuerySnapshot> itemTask = documentReference.collection("items").get();
+        while (!itemTask.isSuccessful()) {
+            //do nothing
+        }
+        for (QueryDocumentSnapshot document : itemTask.getResult()) {
+            Log.d("order of the calls", "items");
+            itemList.add(new Item((int) ((long) document.get("id")),
+                    (int) ((long) document.get("categoryId")),
+                    (int) ((long) document.get("subCategoryId")),
+                    document.getString("name"),
+                    document.getDouble("price"),
+                    document.getString("image")));
+        }
+
+
+        Log.d("order of the calls", "for loop entrace");
+        for (Category categoryItem : categoryList) {
+            // Temporary list of the current sıb-categories
+            ArrayList<SubCategory> tempSubCategoryList;
+            Log.d("order of the calls", "for loop");
+            Toast.makeText(ItemActivity.this, "called", Toast.LENGTH_SHORT).show();
+
+            // Temporary list of the current items
+            ArrayList<Item> tempItemList;
+
+            // Temporary map
+            Map<SubCategory, ArrayList<Item>> itemMap;
+
+            // categoryId == 1 means category with all items and sub-categories.
+            // That's why i add all the sub-categories and items directly.
+            if (categoryItem.id == 1) {
+                itemMap = getItemMap(subCategoryList);
+
+                solutionList.add(new Solution(categoryItem, subCategoryList, itemList, itemMap));
+            } else {
+                tempSubCategoryList = getSubCategoryListByCategoryId(categoryItem.id);
+                tempItemList = getItemListByCategoryId(categoryItem.id);
+                itemMap = getItemMap(tempSubCategoryList);
+
+                solutionList.add(new Solution(categoryItem, tempSubCategoryList, tempItemList, itemMap));
+            }
+        }
+
+        /*taskCategory.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        //itemNameList.add(document.getString("name"));
+                        Log.d("order of the calls", "category");
+                        categoryList.add(new Category((int) ((long) document.get("id")), document.getString("name"), R.drawable.all));
+                        Toast.makeText(ItemActivity.this, Integer.toString((int) ((long) document.get("id"))), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });*/
+
+        /*db.collection("restaurants").document(placeId).collection("subcategories")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -227,27 +305,33 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //itemNameList.add(document.getString("name"));
                                 //categoryList.add(new Category((int) ((long) document.get("id")), document.getString("name"), R.drawable.all));
-                                Toast.makeText(ItemActivity.this,Integer.toString((int) ((long) document.get("id"))), Toast.LENGTH_SHORT).show();
+                                Log.d("order of the calls", "subcategories");
+                                subCategoryList.add(new SubCategory((int) ((long) document.get("id")), (int) ((long) document.get("categoryId")), document.getString("name")));
+                                Toast.makeText(ItemActivity.this, document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
-                });
+                });*/
 
-        db.collection("restaurants").document(placeId).collection("items")
+        /*db.collection("restaurants").document(placeId).collection("items")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                itemNameList.add(document.getString("name"));
+                                //itemNameList.add(document.getString("name"));
+                                //itemNameList.add(document.getString("name"));
+                                Log.d("order of the calls", "items");
+                                itemList.add(new Item(1, 2, 1, "Ultimate Hamburger", 5.0, "https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/pass/the-ultimate-hamburger.jpg"));
+                                Toast.makeText(ItemActivity.this, document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(ItemActivity.this, itemNameList.get(0), Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
 
-        categoryList.add(new Category(1, "All", R.drawable.all));
+
+        /*categoryList.add(new Category(1, "All", R.drawable.all));
 
         categoryList.add(new Category(2, "Food", R.drawable.food));
         subCategoryList.add(new SubCategory(1, 2, "Hamburger"));
@@ -284,7 +368,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         itemList.add(new Item(13, 2, 4, "Tel Kadayıf with Pistachio", 9.0, "http://www.karakoygulluoglu.com/fistikli-tel-kadayif-1-39-44-B.jpg"));
 
         //Water
-        itemList.add(new Item(14, 3, 5, "0.5 liter", 300000/*0.30*/, "http://cdn.avansas.com/assets/59479/erikli-su-0-5-lt-12-li-1-zoom.jpg"));
+        itemList.add(new Item(14, 3, 5, "0.5 liter", 300000, "http://cdn.avansas.com/assets/59479/erikli-su-0-5-lt-12-li-1-zoom.jpg"));
 
         //Soda
         itemList.add(new Item(15, 3, 6, "Coca Cola 0.3l", 0.70, "https://images-na.ssl-images-amazon.com/images/I/818i%2BQm07UL._SL1500_.jpg"));
@@ -302,14 +386,14 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         //Fruit Juice
         itemList.add(new Item(22, 3, 9, "Mixed Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791763.jpg"));
         itemList.add(new Item(23, 3, 9, "Apricot Fruit Juice", 1.0, "http://cdn.avansas.com/assets/53313/cappy-meyve-suyu-kayisi-1-lt-0-zoom.jpg"));
-        itemList.add(new Item(24, 3, 9, "Orange Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791980.jpg"));
+        itemList.add(new Item(24, 3, 9, "Orange Fruit Juice", 1.0, "https://images.hepsiburada.net/assets/Taris/500/Taris_4791980.jpg"));*/
 
         /*
         * Populates solutionList.
         * For each category, gets sub-categories, items and a map
         * showing the connection between the sub-category and its items.
         */
-        for (Category categoryItem : categoryList) {
+        /*for (Category categoryItem : categoryList) {
             // Temporary list of the current sıb-categories
             ArrayList<SubCategory> tempSubCategoryList;
 
@@ -332,7 +416,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
 
                 solutionList.add(new Solution(categoryItem, tempSubCategoryList, tempItemList, itemMap));
             }
-        }
+        }*/
     }
 
     /**
@@ -370,7 +454,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 tempItemList.add(item);
             }
         }
-
         return tempItemList;
     }
 
@@ -567,7 +650,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         }
         return total;
     }
-
 
     /*
     * Updates the total price of all products added to the cart

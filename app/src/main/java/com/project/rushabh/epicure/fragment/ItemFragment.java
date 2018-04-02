@@ -19,7 +19,6 @@ import com.project.rushabh.epicure.model.SubCategory;
 import com.project.rushabh.epicure.util.TopGridLayoutManager;
 import com.project.rushabh.epicure.util.TopLinearLayoutManager;
 
-
 /**
  * Created by brkckr on 28.10.2017.
  */
@@ -132,7 +131,6 @@ public class ItemFragment extends Fragment implements SubCategoryAdapter.ISubCat
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
         return v;
     }
 
@@ -156,7 +154,6 @@ public class ItemFragment extends Fragment implements SubCategoryAdapter.ISubCat
                 absolutePosition += solution.itemMap.get(subCategory).size();
             }
         }
-
         return absolutePosition;
     }
 
@@ -186,7 +183,6 @@ public class ItemFragment extends Fragment implements SubCategoryAdapter.ISubCat
                 break;
             }
         }
-
         return section;
     }
 }
