@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -54,7 +54,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         OrderAdapter.IOrderAdapterCallback {
 
     private DrawerLayout drawer;
-    private ConstraintLayout rlCart;
+    private RelativeLayout rlCart;
     private TextView txtCount;
     private TextView txtTotal;
     private RecyclerView rvOrder;
@@ -441,7 +441,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      * @see com.project.rushabh.epicure.util.CircleImageView
      */
     private void addItemToCartAnimation(ImageView targetView, final Item item, final int quantity) {
-        ConstraintLayout destView = findViewById(R.id.rlCart);
+        RelativeLayout destView = findViewById(R.id.rlCart);
 
         new CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(300).setDestView(destView).setAnimationListener(new Animator.AnimatorListener() {
             @Override

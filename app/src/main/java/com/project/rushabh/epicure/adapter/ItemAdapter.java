@@ -83,7 +83,7 @@ public class ItemAdapter extends SectionedRecyclerViewAdapter<ItemAdapter.ItemVi
 
         holder.txtPrice.setText(String.format("%.2f", item.unitPrice));
 
-        holder.imgAdd.setOnClickListener(new View.OnClickListener()
+        holder.cardItem.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -98,7 +98,7 @@ public class ItemAdapter extends SectionedRecyclerViewAdapter<ItemAdapter.ItemVi
             }
         });
 
-        holder.cardItem.setOnClickListener(new View.OnClickListener()
+        holder.imgAdd.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
