@@ -17,7 +17,7 @@ import com.project.rushabh.epicure.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     private Button toSignUpBtn, toLogInButton, toMainBtn;
     private TextView mainTitleText;
     private ImageView mainLogoImage;

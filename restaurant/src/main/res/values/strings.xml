@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">Restaurant</string>
 
+    <!-- Splash Screen-->
+    <string name="splash_screen_sign_up_btn"><![CDATA[Make an account >]]></string>
+    <string name="splash_screen_login_btn"><![CDATA[Log into your account >]]></string>
+    <string name="splash_screen_main_btn"><![CDATA[Continue without login >]]></string>
+
     <!-- Login -->
     <string name="login_username_hint">E-mail</string>
     <string name="login_password_hint">Password</string>
     <string name="login_btn">Login</string>
     <string name="to_sign_up"><center>Don\'t own an account?\nSign up instead</center></string>
+    <string name="image_contentdescription">Contentdescription</string>
+    <string name="shared_pref_file_name">shared_pref_file_name</string>
+    <string name="spk_is_logged_in">spk_is_logged_in</string>
 </resources>
