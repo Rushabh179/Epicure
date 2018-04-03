@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">restaurant</string>
+    <string name="app_name">Restaurant</string>
+
+    <!-- Login -->
+    <string name="login_username_hint">E-mail</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_btn">Login</string>
+    <string name="to_sign_up"><center>Don\'t own an account?\nSign up instead</center></string>
 </resources>
