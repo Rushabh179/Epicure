@@ -59,7 +59,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.rushabh.epicure.activity.MainActivity" />
         </activity>
-        <activity android:name=".activity.SignUpActivity"></activity>
+        <activity android:name=".activity.SignUpActivity" />
+
+        <service android:name=".activity.PushNotificationActivity" />
     </application>
 
 </manifest>

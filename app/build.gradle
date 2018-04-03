@@ -59,17 +59,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
 
+    // Firebase
     implementation 'com.google.firebase:firebase-core:12.0.1'
     implementation 'com.google.firebase:firebase-auth:12.0.1'
     implementation 'com.google.firebase:firebase-firestore:12.0.1'
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
 
-    // image
+    // Image coding
     implementation 'com.github.bumptech.glide:glide:4.6.1'
 
-    //sectioned recyclerview
+    // Sectioned recyclerview
     implementation 'com.afollestad:sectioned-recyclerview:0.5.0'
 
-    //increment product view
+    // Increment product view
     implementation 'com.steelkiwi:increment-product-view:1.2.0'
 }
 
