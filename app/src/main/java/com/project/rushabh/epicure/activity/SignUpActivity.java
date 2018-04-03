@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.SignUpSectionPagerAdaper;
 import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
@@ -25,8 +30,12 @@ import com.project.rushabh.epicure.fragment.SignUpFragment2;
 import com.project.rushabh.epicure.fragment.SignUpFragment3;
 import com.project.rushabh.epicure.util.NonSwipeableViewPager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHolderFragment.OnGetAccountViewListener, SignUpFragment2.OnGetPersonalViewListener, SignUpFragment3.OnGetWelocomeViewListener {
 
+    private static final String TAG = SignUpActivity.class.getSimpleName();
     private SignUpSectionPagerAdaper sectionsPagerAdapter;
     private NonSwipeableViewPager viewPager;
 
@@ -43,6 +52,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
     private SharedPreferences.Editor editor;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
+
+    private Map<String, Object> signUpMap;
 
     private View accountView, personalView, welcomeView;
 
@@ -55,6 +67,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
             getSupportActionBar().hide();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        signUpMap = new HashMap<>();
         sectionsPagerAdapter = new SignUpSectionPagerAdaper(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -118,6 +132,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                         editor.putString(getString(R.string.spk_email), emailSignUpText.getText().toString());
                         editor.putString(getString(R.string.spk_password), passwordSignUpText.getText().toString());
                         editor.apply();
+                        signUpMap.put("name", nameSignUpText.getText().toString());
+                        signUpMap.put("email", emailSignUpText.getText().toString());
+                        signUpMap.put("password", passwordSignUpText.getText().toString());
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                     }
                 } else if (viewPager.getCurrentItem() == 1) {
@@ -130,6 +147,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                         editor.putFloat(getString(R.string.spk_latitude), (float) latitudeSignUp);
                         editor.putFloat(getString(R.string.spk_longitude), (float) longitudeSignUp);
                         editor.apply();
+                        signUpMap.put("contact", contactSignUpText.getText().toString());
+                        signUpMap.put("address", addressSignUpText.getText().toString());
+                        signUpMap.put("geopoint", new GeoPoint(latitudeSignUp, longitudeSignUp));
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                     }
                 }
@@ -186,7 +206,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "Sign up successful" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
@@ -194,6 +214,14 @@ public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHold
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                     finish();
                                 }
+                            }
+                        });
+                db.collection("user")
+                        .add(signUpMap)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.i(TAG, documentReference.getId());
                             }
                         });
             }

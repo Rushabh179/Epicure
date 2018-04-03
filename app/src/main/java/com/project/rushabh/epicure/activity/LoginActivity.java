@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
                                     // there was an error
-                                    if (passwordLoginText.getText().length() < 6) {
-                                        passwordLoginText.setError("Less than 6");
+                                    if (passwordLoginText.getText().length() < 8) {
+                                        passwordLoginText.setError("Less than 8");
                                     } else {
                                         Toast.makeText(LoginActivity.this, "auth failed", Toast.LENGTH_LONG).show();
                                     }
