@@ -29,6 +29,7 @@
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.TabLayout" />
+        <activity android:name=".test.CategoryActivity"></activity>
     </application>
 
 </manifest>

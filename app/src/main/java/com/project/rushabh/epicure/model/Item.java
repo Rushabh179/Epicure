@@ -9,13 +9,13 @@ import java.io.Serializable;
 public class Item implements Serializable
 {
     public int id;
-    public int categoryId;
-    public int subCategoryId;
+    public String categoryId;
+    public String subCategoryId;
     public String name;
     public double unitPrice;
     public String url;
 
-    public Item(int id, int categoryId, int subCategoryId, String name, double unitPrice, String url)
+    public Item(int id, String categoryId, String subCategoryId, String name, double unitPrice, String url)
     {
         this.id = id;
         this.categoryId = categoryId;

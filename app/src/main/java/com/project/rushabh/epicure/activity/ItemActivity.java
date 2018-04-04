@@ -49,6 +49,7 @@ import com.steelkiwi.library.listener.OnStateListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback,
         OrderAdapter.IOrderAdapterCallback {
@@ -225,8 +226,10 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (QueryDocumentSnapshot document : categoryTask.getResult()) {
             //itemNameList.add(document.getString("name"));
             Log.d("order of the calls", document.getString("name"));
-            categoryList.add(new Category((int) ((long) document.get("id")),
-                    document.getString("name"), R.drawable.all));
+            categoryList.add(new Category(document.getId(),
+                    (int) ((long) document.get("id")),
+                    document.getString("name"),
+                    R.drawable.all));
         }
 
         Task<QuerySnapshot> subCategoryTask = documentReference.collection("subcategories").get();
@@ -236,8 +239,9 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (QueryDocumentSnapshot document : subCategoryTask.getResult()) {
             Log.d("order of the calls", document.getString("name"));
             //subCategoryList.add(new SubCategory(1, 2, "Hamburger"));
-            subCategoryList.add(new SubCategory((int) ((long) document.get("id")),
-                    (int) ((long) document.get("categoryId")),
+            subCategoryList.add(new SubCategory(document.getId(),
+                    (int) ((long) document.get("id")),
+                    document.getString("categoryId"),
                     document.getString("name")));
         }
 
@@ -248,8 +252,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         for (QueryDocumentSnapshot document : itemTask.getResult()) {
             Log.d("order of the calls", "items");
             itemList.add(new Item((int) ((long) document.get("id")),
-                    (int) ((long) document.get("categoryId")),
-                    (int) ((long) document.get("subCategoryId")),
+                    document.getString("categoryId"),
+                    document.getString("subCategoryId"),
                     document.getString("name"),
                     document.getDouble("price"),
                     document.getString("image")));
@@ -274,8 +278,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
 
                 solutionList.add(new Solution(categoryItem, subCategoryList, itemList, itemMap));
             } else {
-                tempSubCategoryList = getSubCategoryListByCategoryId(categoryItem.id);
-                tempItemList = getItemListByCategoryId(categoryItem.id);
+                tempSubCategoryList = getSubCategoryListByCategoryId(categoryItem.firebaseId);
+                tempItemList = getItemListByCategoryId(categoryItem.firebaseId);
                 itemMap = getItemMap(tempSubCategoryList);
 
                 solutionList.add(new Solution(categoryItem, tempSubCategoryList, tempItemList, itemMap));
@@ -291,11 +295,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      *                   Returns the sub-categories belonging to that category as a list using the id of the current category.
      * @return a list of sub-category
      */
-    private ArrayList<SubCategory> getSubCategoryListByCategoryId(int categoryId) {
+    private ArrayList<SubCategory> getSubCategoryListByCategoryId(String categoryId) {
         ArrayList<SubCategory> tempSubCategoryList = new ArrayList<>();
 
         for (SubCategory subCategory : subCategoryList) {
-            if (subCategory.categoryId == categoryId) {
+            if (Objects.equals(subCategory.categoryId, categoryId)) {
                 tempSubCategoryList.add(new SubCategory(subCategory));
             }
         }
@@ -310,11 +314,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      *                   Returns the items belonging to that category as a list using the id of the current category.
      * @return a list of items
      */
-    private ArrayList<Item> getItemListByCategoryId(int categoryId) {
+    private ArrayList<Item> getItemListByCategoryId(String categoryId) {
         ArrayList<Item> tempItemList = new ArrayList<>();
 
         for (Item item : itemList) {
-            if (item.categoryId == categoryId) {
+            if (Objects.equals(item.categoryId, categoryId)) {
                 tempItemList.add(item);
             }
         }
@@ -330,11 +334,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      *                      using the id of the current sub-category.
      * @return a list of items
      */
-    private ArrayList<Item> getItemListBySubCategoryId(int subCategoryId) {
+    private ArrayList<Item> getItemListBySubCategoryId(String subCategoryId) {
         ArrayList<Item> tempItemList = new ArrayList<>();
 
         for (Item item : itemList) {
-            if (item.subCategoryId == subCategoryId) {
+            if (Objects.equals(item.subCategoryId, subCategoryId)) {
                 tempItemList.add(item);
             }
         }
@@ -353,7 +357,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         Map<SubCategory, ArrayList<Item>> itemMap = new HashMap<>();
 
         for (SubCategory subCategory : subCategoryList) {
-            itemMap.put(subCategory, getItemListBySubCategoryId(subCategory.id));
+            itemMap.put(subCategory, getItemListBySubCategoryId(subCategory.firebaseId));
         }
         return itemMap;
     }

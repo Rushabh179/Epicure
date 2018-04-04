@@ -7,19 +7,22 @@ import java.io.Serializable;
  */
 
 public class SubCategory implements Serializable {
+    public String firebaseId;
     public int id;
-    public int categoryId;
+    public String categoryId;
     public String name;
     public boolean isSelected = false;
     public boolean isExpanded = true;
 
-    public SubCategory(int id, int categoryId, String name) {
+    public SubCategory(String firebaseId, int id, String categoryId, String name) {
+        this.firebaseId = firebaseId;
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
     }
 
     public SubCategory(SubCategory subCategory) {
+        this.firebaseId = subCategory.firebaseId;
         this.id = subCategory.id;
         this.categoryId = subCategory.categoryId;
         this.name = subCategory.name;

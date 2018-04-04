@@ -21,4 +21,7 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="manage_categories_btn">Categories</string>
+    <string name="manage_subcategories_btn">Subcategories</string>
+    <string name="manage_items_btn">Items</string>
 </resources>
