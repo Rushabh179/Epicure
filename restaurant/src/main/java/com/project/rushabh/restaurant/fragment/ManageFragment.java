@@ -95,12 +95,15 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
     public void onRecyclerClick(View view, int position) {
         switch (position) {
             case 0:
-                SubCategoryFragment fragment2 = new SubCategoryFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(this).attach(this).commit();
+                /*SubCategoryFragment fragment2 = new SubCategoryFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 assert fragmentManager != null;
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment2);
-                fragmentTransaction.commit();
+                fragmentTransaction.attach(fragment2);
+                //fragmentTransaction.replace(R.id.container, fragment2);
+                fragmentTransaction.commit();*/
         }
     }
 }
