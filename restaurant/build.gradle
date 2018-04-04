@@ -25,6 +25,29 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs =
+                    [
+                            'src/main/java',
+                            'apt_generated'
+                    ]
+            aidl.srcDirs = ['src/main.aidl', 'apt_generated']
+            assets.srcDirs = ['src/main/assets']
+            res.srcDirs =
+                    [
+                            'src/main/res',
+                            'src/main/res/layouts',
+                            'src/main/res/layouts/activity',
+                            'src/main/res/layouts/listitem',
+                            'src/main/res/layouts/fragment',
+                            'src/main/res/layouts/dialog',
+                            'src/main/res/layouts/other',
+                            'src/main/res/layouts/test'
+                    ]
+        }
+    }
 }
 
 dependencies {
@@ -46,7 +69,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:12.0.1'
     implementation 'com.google.firebase:firebase-messaging:12.0.1'
 }
-
-
 
 apply plugin: 'com.google.gms.google-services'

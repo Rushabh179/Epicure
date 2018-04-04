@@ -1,4 +1,4 @@
-package com.project.rushabh.restaurant;
+package com.project.rushabh.restaurant.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.project.rushabh.restaurant.R;
+import com.project.rushabh.restaurant.test.R_MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

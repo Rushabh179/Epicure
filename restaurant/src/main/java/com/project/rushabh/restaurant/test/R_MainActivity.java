@@ -1,4 +1,4 @@
-package com.project.rushabh.restaurant;
+package com.project.rushabh.restaurant.test;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.project.rushabh.restaurant.R;
 
 import java.util.HashMap;
 import java.util.Map;
