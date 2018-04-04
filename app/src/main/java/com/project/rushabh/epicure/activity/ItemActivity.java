@@ -209,7 +209,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     /*
     * Prepares sample data to be used within the application
     */
-    @SuppressWarnings("StatementWithEmptyBody") //TODO: revie and find better practice, Refer to TestData.class for original code
+    @SuppressWarnings("StatementWithEmptyBody") //TODO: review and find better practice, Refer to TestData.class for original code
     private void prepareData() {
         categoryList = new ArrayList<>();
         subCategoryList = new ArrayList<>();
