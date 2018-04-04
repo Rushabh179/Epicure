@@ -5,5 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textColor="#30b180"
+    android:background="?android:attr/selectableItemBackground"
     android:textSize="@dimen/_25sdp"
     tools:text="@tools:sample/lorem" />

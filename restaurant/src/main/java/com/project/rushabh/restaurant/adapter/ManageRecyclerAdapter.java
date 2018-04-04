@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.project.rushabh.restaurant.R;
+import com.project.rushabh.restaurant.interfaces.OnRecyclerClickListener;
 
 import java.util.List;
 
@@ -18,9 +19,14 @@ import java.util.List;
 public class ManageRecyclerAdapter extends RecyclerView.Adapter<ManageRecyclerAdapter.ViewHolder> {
 
     private List<String> items;
+    private OnRecyclerClickListener onRecyclerClickListener;
 
     public ManageRecyclerAdapter(List<String> items) {
         this.items = items;
+    }
+
+    public void setOnRecyclerClickListener(OnRecyclerClickListener onRecyclerClickListener) {
+        this.onRecyclerClickListener = onRecyclerClickListener;
     }
 
     @NonNull
@@ -48,6 +54,15 @@ public class ManageRecyclerAdapter extends RecyclerView.Adapter<ManageRecyclerAd
         public ViewHolder(View itemView) {
             super(itemView);
             itemText = itemView.findViewById(R.id.text_list_manage);
+
+            itemText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onRecyclerClickListener != null) {
+                        onRecyclerClickListener.onRecyclerClick(view, getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

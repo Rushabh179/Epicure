@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,10 +30,10 @@ import java.util.List;
  * Created by rushabh.modi on 04/04/18.
  */
 
-public class ManageFragment extends Fragment implements OnRecyclerClickListener{
+public class SubCategoryFragment extends Fragment implements OnRecyclerClickListener{
 
-    private RecyclerView manageRecyclerView;
-    private ManageRecyclerAdapter manageRecyclerAdapter;
+    private RecyclerView subCategoryRecyclerView;
+    private ManageRecyclerAdapter subCategoryRecyclerAdapter;
     private List<String> items;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
@@ -43,14 +42,14 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public ManageFragment() {
+    public SubCategoryFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section number.
      */
-    public static ManageFragment newInstance(int sectionNumber) {
-        ManageFragment fragment = new ManageFragment();
+    public static SubCategoryFragment newInstance(int sectionNumber) {
+        SubCategoryFragment fragment = new SubCategoryFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -63,15 +62,15 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
         items = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
-        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("category");
+        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("subcategories");
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manage, container, false);
-        manageRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
-        manageRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        manageRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
+        subCategoryRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
+        subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        subCategoryRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
         collectionReference
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,9 +81,9 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
                                 items.add(document.getString("name"));
                                 //Toast.makeText(getContext(), document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
-                            manageRecyclerAdapter = new ManageRecyclerAdapter(items);
-                            manageRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
-                            manageRecyclerView.setAdapter(manageRecyclerAdapter);
+                            subCategoryRecyclerAdapter = new ManageRecyclerAdapter(items);
+                            subCategoryRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
+                            subCategoryRecyclerView.setAdapter(subCategoryRecyclerAdapter);
                         }
                     }
                 });
@@ -95,7 +94,7 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
     public void onRecyclerClick(View view, int position) {
         switch (position) {
             case 0:
-                SubCategoryFragment fragment2 = new SubCategoryFragment();
+                Fragment fragment2 = new Fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 assert fragmentManager != null;
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
