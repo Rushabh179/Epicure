@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  */
 
 // A placeholder fragment containing a simple view.
-public class SignUpPlaceHolderFragment extends Fragment {
+public class SignUpFragment1 extends Fragment {
 
     // The fragment argument representing the section number for this fragment.
     private static final String ARG_FRAGMENT_RESOURCE = "fragment_resourse";
@@ -22,12 +22,12 @@ public class SignUpPlaceHolderFragment extends Fragment {
     public View view;
     OnGetAccountViewListener onGetViewListener;
 
-    public SignUpPlaceHolderFragment() {
+    public SignUpFragment1() {
     }
 
     // Returns a new instance of this fragment for the given section number.
-    public static SignUpPlaceHolderFragment newInstance(int fragmentResource, int sectionNumber) {
-        SignUpPlaceHolderFragment fragment = new SignUpPlaceHolderFragment();
+    public static SignUpFragment1 newInstance(int fragmentResource, int sectionNumber) {
+        SignUpFragment1 fragment = new SignUpFragment1();
         Bundle args = new Bundle();
         args.putInt(ARG_FRAGMENT_RESOURCE, fragmentResource);
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);

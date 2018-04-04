@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.project.rushabh.restaurant.fragment.ManageFragment;
 import com.project.rushabh.restaurant.fragment.OrderFragment;
 
 /**
@@ -23,12 +24,18 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return OrderFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return OrderFragment.newInstance(position);
+            case 1:
+                return ManageFragment.newInstance(position);
+        }
+        return null;
     }
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 3;
+        // Show 2 total pages.
+        return 2;
     }
 }

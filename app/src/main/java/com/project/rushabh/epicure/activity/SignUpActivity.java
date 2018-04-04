@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.SignUpSectionPagerAdaper;
-import com.project.rushabh.epicure.fragment.SignUpPlaceHolderFragment;
+import com.project.rushabh.epicure.fragment.SignUpFragment1;
 import com.project.rushabh.epicure.fragment.SignUpFragment2;
 import com.project.rushabh.epicure.fragment.SignUpFragment3;
 import com.project.rushabh.epicure.util.NonSwipeableViewPager;
@@ -33,7 +33,7 @@ import com.project.rushabh.epicure.util.NonSwipeableViewPager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUpActivity extends AppCompatActivity implements SignUpPlaceHolderFragment.OnGetAccountViewListener, SignUpFragment2.OnGetPersonalViewListener, SignUpFragment3.OnGetWelocomeViewListener {
+public class SignUpActivity extends AppCompatActivity implements SignUpFragment1.OnGetAccountViewListener, SignUpFragment2.OnGetPersonalViewListener, SignUpFragment3.OnGetWelocomeViewListener {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private SignUpSectionPagerAdaper sectionsPagerAdapter;

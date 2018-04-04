@@ -2,10 +2,10 @@ package com.project.rushabh.restaurant.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.rushabh.restaurant.R;
-import com.project.rushabh.restaurant.test.R_MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -80,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor = sharedPreferences.edit();
                                     editor.putBoolean(getString(R.string.spk_is_logged_in), true).apply();
                                     Toast.makeText(LoginActivity.this, "signed in", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(LoginActivity.this, R_MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
