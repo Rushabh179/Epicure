@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +30,7 @@ import java.util.List;
  * Created by rushabh.modi on 04/04/18.
  */
 
-public class ManageFragment extends Fragment implements OnRecyclerClickListener{
+public class CategoryFragment extends Fragment implements OnRecyclerClickListener{
 
     private RecyclerView manageRecyclerView;
     private ManageRecyclerAdapter manageRecyclerAdapter;
@@ -41,20 +40,7 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-
-    public ManageFragment() {
-    }
-
-    /**
-     * Returns a new instance of this fragment for the given section number.
-     */
-    public static ManageFragment newInstance(int sectionNumber) {
-        ManageFragment fragment = new ManageFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+    public CategoryFragment() {
     }
 
     @Override
@@ -95,15 +81,12 @@ public class ManageFragment extends Fragment implements OnRecyclerClickListener{
     public void onRecyclerClick(View view, int position) {
         switch (position) {
             case 0:
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(this).attach(this).commit();
-                /*SubCategoryFragment fragment2 = new SubCategoryFragment();
+                SubCategoryFragment subCategoryFragment = new SubCategoryFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 assert fragmentManager != null;
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.attach(fragment2);
-                //fragmentTransaction.replace(R.id.container, fragment2);
-                fragmentTransaction.commit();*/
+                fragmentTransaction.replace(R.id.frame_container, subCategoryFragment);
+                fragmentTransaction.commit();
         }
     }
 }
