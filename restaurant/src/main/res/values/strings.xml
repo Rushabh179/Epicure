@@ -24,4 +24,7 @@
     <string name="manage_categories_btn">Categories</string>
     <string name="manage_subcategories_btn">Subcategories</string>
     <string name="manage_items_btn">Items</string>
+    <string name="manage_title_category">Category</string>
+    <string name="manage_title_subcategory">Subcategory</string>
+    <string name="manage_title_items">Items</string>
 </resources>

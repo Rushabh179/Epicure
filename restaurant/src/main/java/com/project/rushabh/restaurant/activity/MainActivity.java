@@ -2,15 +2,19 @@ package com.project.rushabh.restaurant.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.project.rushabh.restaurant.R;
 import com.project.rushabh.restaurant.adapter.SectionPagerAdapter;
+import com.project.rushabh.restaurant.fragment.ManageContainerFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +52,23 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments()) {
+            if (frag.isVisible()) {
+                FragmentManager childFm = frag.getChildFragmentManager();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
     }
 
     @Override

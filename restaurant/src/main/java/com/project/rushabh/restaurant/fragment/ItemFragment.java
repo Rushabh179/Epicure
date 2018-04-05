@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by rushabh.modi on 04/04/18.
+ * Created by rushabh.modi on 05/04/18.
  */
 
-public class SubCategoryFragment extends Fragment implements OnRecyclerClickListener{
+public class ItemFragment extends Fragment implements OnRecyclerClickListener{
 
     private RecyclerView subCategoryRecyclerView;
     private TextView manageTitleText;
@@ -42,23 +42,23 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
-    public SubCategoryFragment() {
+    public ItemFragment() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        items = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
-        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("subcategories");
+        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items");
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        items = new ArrayList<>();
         View rootView = inflater.inflate(R.layout.fragment_manage, container, false);
         manageTitleText = rootView.findViewById(R.id.text_title_manage);
-        manageTitleText.setText(getText(R.string.manage_title_subcategory));
+        manageTitleText.setText(getText(R.string.manage_title_items));
         subCategoryRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
         subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         subCategoryRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
@@ -83,14 +83,6 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
 
     @Override
     public void onRecyclerClick(View view, int position) {
-        switch (position) {
-            case 0:
-                ItemFragment itemFragment = new ItemFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                assert fragmentManager != null;
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().addToBackStack(null);
-                fragmentTransaction.replace(R.id.frame_container, itemFragment);
-                fragmentTransaction.commit();
-        }
+
     }
 }

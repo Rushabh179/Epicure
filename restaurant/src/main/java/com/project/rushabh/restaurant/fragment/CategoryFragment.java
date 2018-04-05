@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,9 +31,10 @@ import java.util.List;
  * Created by rushabh.modi on 04/04/18.
  */
 
-public class CategoryFragment extends Fragment implements OnRecyclerClickListener{
+public class CategoryFragment extends Fragment implements OnRecyclerClickListener {
 
     private RecyclerView manageRecyclerView;
+    private TextView manageTitleText;
     private ManageRecyclerAdapter manageRecyclerAdapter;
     private List<String> items;
     private FirebaseFirestore db;
@@ -46,7 +48,6 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        items = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
         collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("category");
@@ -54,7 +55,10 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        items = new ArrayList<>();
         View rootView = inflater.inflate(R.layout.fragment_manage, container, false);
+        manageTitleText = rootView.findViewById(R.id.text_title_manage);
+        manageTitleText.setText(getText(R.string.manage_title_category));
         manageRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
         manageRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         manageRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
@@ -84,7 +88,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
                 SubCategoryFragment subCategoryFragment = new SubCategoryFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 assert fragmentManager != null;
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().addToBackStack(null);
                 fragmentTransaction.replace(R.id.frame_container, subCategoryFragment);
                 fragmentTransaction.commit();
         }
