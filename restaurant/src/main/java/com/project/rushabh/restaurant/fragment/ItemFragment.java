@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.restaurant.R;
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by rushabh.modi on 05/04/18.
  */
 
-public class ItemFragment extends Fragment implements OnRecyclerClickListener{
+public class ItemFragment extends Fragment implements OnRecyclerClickListener {
 
     private RecyclerView subCategoryRecyclerView;
     private TextView manageTitleText;
@@ -39,10 +40,18 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener{
     private List<String> items;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
+    private int subCategoryPosition;
+    private String subCategoryId;
+    private Query itemQuery;
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
     public ItemFragment() {
+    }
+
+    public void setSubCategoryinfo(int subCategoryPosition, String subCategoryId) {
+        this.subCategoryPosition = subCategoryPosition;
+        this.subCategoryId = subCategoryId;
     }
 
     @Override
@@ -52,6 +61,10 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener{
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
         collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items");
+        if (subCategoryPosition == 0)
+            itemQuery = collectionReference;
+        else
+            itemQuery = collectionReference.whereEqualTo("subCategoryId", subCategoryId);
     }
 
     @Override
@@ -62,8 +75,7 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener{
         subCategoryRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
         subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         subCategoryRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
-        collectionReference
-                .get()
+        itemQuery.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

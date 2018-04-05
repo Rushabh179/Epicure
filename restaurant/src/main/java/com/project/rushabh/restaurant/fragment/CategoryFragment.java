@@ -36,7 +36,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
     private RecyclerView manageRecyclerView;
     private TextView manageTitleText;
     private ManageRecyclerAdapter manageRecyclerAdapter;
-    private List<String> items;
+    private List<String> items, categoryIdList;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
 
@@ -56,6 +56,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         items = new ArrayList<>();
+        categoryIdList = new ArrayList<>();
         View rootView = inflater.inflate(R.layout.fragment_manage, container, false);
         manageTitleText = rootView.findViewById(R.id.text_title_manage);
         manageTitleText.setText(getText(R.string.manage_title_category));
@@ -70,6 +71,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 items.add(document.getString("name"));
+                                categoryIdList.add(document.getId());
                                 //Toast.makeText(getContext(), document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
                             manageRecyclerAdapter = new ManageRecyclerAdapter(items);
@@ -83,14 +85,12 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
 
     @Override
     public void onRecyclerClick(View view, int position) {
-        switch (position) {
-            case 0:
-                SubCategoryFragment subCategoryFragment = new SubCategoryFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                assert fragmentManager != null;
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().addToBackStack(null);
-                fragmentTransaction.replace(R.id.frame_container, subCategoryFragment);
-                fragmentTransaction.commit();
-        }
+        SubCategoryFragment subCategoryFragment = new SubCategoryFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        subCategoryFragment.setCategoryinfo(position, categoryIdList.get(position));
+        assert fragmentManager != null;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().addToBackStack(null);
+        fragmentTransaction.replace(R.id.frame_container, subCategoryFragment);
+        fragmentTransaction.commit();
     }
 }
