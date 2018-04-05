@@ -102,7 +102,7 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
     public void onRecyclerClick(View view, int position) {
         ItemFragment itemFragment = new ItemFragment();
         FragmentManager fragmentManager = getFragmentManager();
-        itemFragment.setSubCategoryinfo(position, subCategoryIdList.get(position));
+        itemFragment.setSubCategoryinfo(position, items, subCategoryIdList);
         assert fragmentManager != null;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().addToBackStack(null);
         fragmentTransaction.replace(R.id.frame_container, itemFragment);

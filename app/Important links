@@ -42,3 +42,6 @@ https://firebase.google.com/docs/firestore/security/get-started?authuser=0
 
 Notifications:
 https://www.androidhive.info/2012/10/android-push-notifications-using-google-cloud-messaging-gcm-php-and-mysql/
+
+Nested Fragment back stack handling:
+https://stackoverflow.com/questions/13418436/android-4-2-back-stack-behaviour-with-nested-fragments

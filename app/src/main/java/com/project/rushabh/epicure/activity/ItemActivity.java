@@ -251,8 +251,9 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         }
         for (QueryDocumentSnapshot document : itemTask.getResult()) {
             Log.d("order of the calls", "items");
-            itemList.add(new Item((int) ((long) document.get("id")),
-                    document.getString("categoryId"),
+            itemList.add(new Item(document.getId(),
+                    (int) ((long) document.get("id")),
+                    //document.getString("categoryId"),
                     document.getString("subCategoryId"),
                     document.getString("name"),
                     document.getDouble("price"),
@@ -276,13 +277,13 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             if (categoryItem.id == 1) {
                 itemMap = getItemMap(subCategoryList);
 
-                solutionList.add(new Solution(categoryItem, subCategoryList, itemList, itemMap));
+                solutionList.add(new Solution(categoryItem, subCategoryList, /*itemList,*/ itemMap));
             } else {
                 tempSubCategoryList = getSubCategoryListByCategoryId(categoryItem.firebaseId);
-                tempItemList = getItemListByCategoryId(categoryItem.firebaseId);
+                //tempItemList = getItemListByCategoryId(categoryItem.firebaseId);
                 itemMap = getItemMap(tempSubCategoryList);
 
-                solutionList.add(new Solution(categoryItem, tempSubCategoryList, tempItemList, itemMap));
+                solutionList.add(new Solution(categoryItem, tempSubCategoryList, /*tempItemList,*/ itemMap));
             }
         }
     }
@@ -306,7 +307,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         return tempSubCategoryList;
     }
 
-    /**
+    /* Dangling comment
      * Gets the items belonging to a category
      *
      * @param categoryId The id of the current category.
@@ -314,7 +315,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
      *                   Returns the items belonging to that category as a list using the id of the current category.
      * @return a list of items
      */
-    private ArrayList<Item> getItemListByCategoryId(String categoryId) {
+    /*private ArrayList<Item> getItemListByCategoryId(String categoryId) {
         ArrayList<Item> tempItemList = new ArrayList<>();
 
         for (Item item : itemList) {
@@ -323,7 +324,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             }
         }
         return tempItemList;
-    }
+    }*/
 
     /**
      * Gets the items belonging to a sub-category
