@@ -1,1 +1,1 @@
-include ':app', ':restaurant'
+include ':app', ':restaurant', ':delivery'
