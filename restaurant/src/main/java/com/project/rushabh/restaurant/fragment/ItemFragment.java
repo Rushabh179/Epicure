@@ -46,7 +46,7 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
 
     private RecyclerView itemRecyclerView;
     private TextView manageTitleText;
-    private FloatingActionButton manageAddFab;
+    private FloatingActionButton itemAddFab;
     private ManageRecyclerAdapter itemRecyclerAdapter;
     private List<String> itemIdList, itemNameList, itemPriceList, itemImageList, subCategoryIdList, subCategoryNameList;
     private FirebaseFirestore db;
@@ -62,10 +62,10 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
     public ItemFragment() {
     }
 
-    public void setSubCategoryinfo(int subCategoryPosition, List<String> subCategoryNameList, List<String> subCategoryIdList) {
+    public void setSubCategoryinfo(int subCategoryPosition, List<String> subCategoryIdList, List<String> subCategoryNameList) {
         this.subCategoryPosition = subCategoryPosition;
-        this.subCategoryNameList = subCategoryNameList;
         this.subCategoryIdList = subCategoryIdList;
+        this.subCategoryNameList = subCategoryNameList;
         /*this.subCategoryNameList.remove(0);
         this.subCategoryIdList.remove(0);*/
     }
@@ -73,12 +73,8 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        itemIdList = new ArrayList<>();
-        itemNameList = new ArrayList<>();
-        itemPriceList = new ArrayList<>();
-        itemImageList = new ArrayList<>();
-        db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
+        db = FirebaseFirestore.getInstance();
         collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items");
         /*if (subCategoryPosition == 0)
             itemBySubCategoryQuery = collectionReference;
@@ -88,9 +84,13 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        itemIdList = new ArrayList<>();
+        itemNameList = new ArrayList<>();
+        itemPriceList = new ArrayList<>();
+        itemImageList = new ArrayList<>();
         rootView = inflater.inflate(R.layout.fragment_manage, container, false);
-        manageAddFab = rootView.findViewById(R.id.fab_manage);
-        manageAddFab.setOnClickListener(this);
+        itemAddFab = rootView.findViewById(R.id.fab_manage);
+        itemAddFab.setOnClickListener(this);
         manageTitleText = rootView.findViewById(R.id.text_title_manage);
         manageTitleText.setText(getText(R.string.manage_title_items));
         itemRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
@@ -108,7 +108,6 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                                 itemNameList.add(document.getString("name"));
                                 itemPriceList.add(document.getDouble("price").toString());
                                 itemImageList.add(document.getString("image"));
-                                //Toast.makeText(getContext(), document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
                             itemRecyclerAdapter = new ManageRecyclerAdapter(itemNameList);
                             itemRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
@@ -121,6 +120,11 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
 
     @Override
     public void onRecyclerClick(final View view, final int position) {
+
+    }
+
+    @Override
+    public void onRecyclerLongClick(final View view, final int position) {
         new AlertDialog.Builder(view.getContext())
                 .setTitle("Options")
                 .setItems(new CharSequence[]{"Update", "Delete"}, new DialogInterface.OnClickListener() {
@@ -131,23 +135,12 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                                 showDialog("Update", position);
                                 break;
                             case 1:
-                                //dialogInterface.dismiss();
                                 new AlertDialog.Builder(view.getContext())
                                         .setMessage("Are you sure you want to delete this item?")
                                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                collectionReference.document(itemIdList.get(position))
-                                                        .delete()
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                                                                itemNameList.remove(position);
-                                                                itemIdList.remove(position);
-                                                                itemRecyclerAdapter.notifyDataSetChanged();
-                                                            }
-                                                        });
+                                                deleteItemQuery(position);
                                             }
                                         })
                                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -168,14 +161,14 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
 
     @SuppressLint("InflateParams")
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) { //FAB
         showDialog("Add", 0);
     }
 
     @SuppressLint("InflateParams")
     public void showDialog(final String type, final int position) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        dialogView = inflater.inflate(R.layout.dialog_add_item, null, false);
+        dialogView = inflater.inflate(R.layout.dialog_item, null, false);
         subCategoryId = dialogView.findViewById(R.id.spinner_dialog_subcategory);
         itemName = dialogView.findViewById(R.id.textInputEditText_item_name);
         itemPrice = dialogView.findViewById(R.id.textInputEditText_item_price);
@@ -225,16 +218,18 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
-                        itemIdList.add(documentReference.getId());
-                        itemNameList.add(itemMap.get("name").toString());
-                        itemPriceList.add(itemMap.get("price").toString());
-                        itemImageList.add(itemMap.get("image").toString());
-                        itemRecyclerAdapter.notifyDataSetChanged();
+                        if (Objects.equals(itemMap.get("subCategoryId").toString(), subCategoryIdList.get(subCategoryPosition))) {
+                            itemIdList.add(documentReference.getId());
+                            itemNameList.add(itemMap.get("name").toString());
+                            itemPriceList.add(itemMap.get("price").toString());
+                            itemImageList.add(itemMap.get("image").toString());
+                            itemRecyclerAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
     }
 
-    private void updateItemQuery(Map<String, Object> itemMap, final int position) {
+    public void updateItemQuery(Map<String, Object> itemMap, final int position) {
         collectionReference.document(itemIdList.get(position))
                 .update(itemMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -242,6 +237,20 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
                         itemRecyclerAdapter.notifyItemChanged(position);
+                    }
+                });
+    }
+
+    public void deleteItemQuery(final int position) {
+        collectionReference.document(itemIdList.get(position))
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        itemNameList.remove(position);
+                        itemIdList.remove(position);
+                        itemRecyclerAdapter.notifyDataSetChanged();
                     }
                 });
     }

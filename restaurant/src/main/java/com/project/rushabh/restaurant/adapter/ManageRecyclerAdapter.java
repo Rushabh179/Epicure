@@ -29,6 +29,10 @@ public class ManageRecyclerAdapter extends RecyclerView.Adapter<ManageRecyclerAd
         this.onRecyclerClickListener = onRecyclerClickListener;
     }
 
+    public void setOnRecyclerLongClickListener(OnRecyclerClickListener onRecyclerClickListener) {
+        this.onRecyclerClickListener = onRecyclerClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,6 +65,16 @@ public class ManageRecyclerAdapter extends RecyclerView.Adapter<ManageRecyclerAd
                     if (onRecyclerClickListener != null) {
                         onRecyclerClickListener.onRecyclerClick(view, getAdapterPosition());
                     }
+                }
+            });
+
+            itemText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (onRecyclerClickListener != null) {
+                        onRecyclerClickListener.onRecyclerLongClick(view, getAdapterPosition());
+                    }
+                    return false;
                 }
             });
         }
