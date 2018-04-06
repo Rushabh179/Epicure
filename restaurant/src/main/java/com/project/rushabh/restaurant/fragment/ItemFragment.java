@@ -26,18 +26,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.restaurant.R;
 import com.project.rushabh.restaurant.adapter.ManageRecyclerAdapter;
 import com.project.rushabh.restaurant.interfaces.OnRecyclerClickListener;
-import com.project.rushabh.restaurant.test.R_MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by rushabh.modi on 05/04/18.
@@ -45,15 +44,14 @@ import java.util.Map;
 
 public class ItemFragment extends Fragment implements OnRecyclerClickListener, View.OnClickListener {
 
-    private RecyclerView subCategoryRecyclerView;
+    private RecyclerView itemRecyclerView;
     private TextView manageTitleText;
     private FloatingActionButton manageAddFab;
-    private ManageRecyclerAdapter subCategoryRecyclerAdapter;
-    private List<String> items, subCategoryIdList, subCategoryNameList;
+    private ManageRecyclerAdapter itemRecyclerAdapter;
+    private List<String> itemIdList, itemNameList, itemPriceList, itemImageList, subCategoryIdList, subCategoryNameList;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
     private int subCategoryPosition;
-    private Query itemQuery;
     private View rootView, dialogView;
     private Spinner subCategoryId;
     private TextInputEditText itemName, itemPrice, itemImage;
@@ -68,21 +66,24 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
         this.subCategoryPosition = subCategoryPosition;
         this.subCategoryNameList = subCategoryNameList;
         this.subCategoryIdList = subCategoryIdList;
-        this.subCategoryNameList.remove(0);
-        this.subCategoryIdList.remove(0);
+        /*this.subCategoryNameList.remove(0);
+        this.subCategoryIdList.remove(0);*/
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        items = new ArrayList<>();
+        itemIdList = new ArrayList<>();
+        itemNameList = new ArrayList<>();
+        itemPriceList = new ArrayList<>();
+        itemImageList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
         collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items");
-        if (subCategoryPosition == 0)
-            itemQuery = collectionReference;
-        else
-            itemQuery = collectionReference.whereEqualTo("subCategoryId", subCategoryIdList.get(subCategoryPosition - 1));
+        /*if (subCategoryPosition == 0)
+            itemBySubCategoryQuery = collectionReference;
+        else*/
+        //itemBySubCategoryQuery = collectionReference.whereEqualTo("subCategoryId", subCategoryIdList.get(subCategoryPosition /*- 1*/));
     }
 
     @Override
@@ -92,21 +93,26 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
         manageAddFab.setOnClickListener(this);
         manageTitleText = rootView.findViewById(R.id.text_title_manage);
         manageTitleText.setText(getText(R.string.manage_title_items));
-        subCategoryRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
-        subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        subCategoryRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
-        itemQuery.get()
+        itemRecyclerView = rootView.findViewById(R.id.recyclerView_manage);
+        itemRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        itemRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
+        collectionReference
+                .whereEqualTo("subCategoryId", subCategoryIdList.get(subCategoryPosition /*- 1*/))
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                items.add(document.getString("name"));
+                                itemIdList.add(document.getId());
+                                itemNameList.add(document.getString("name"));
+                                itemPriceList.add(document.getDouble("price").toString());
+                                itemImageList.add(document.getString("image"));
                                 //Toast.makeText(getContext(), document.getString("name"), Toast.LENGTH_SHORT).show();
                             }
-                            subCategoryRecyclerAdapter = new ManageRecyclerAdapter(items);
-                            subCategoryRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
-                            subCategoryRecyclerView.setAdapter(subCategoryRecyclerAdapter);
+                            itemRecyclerAdapter = new ManageRecyclerAdapter(itemNameList);
+                            itemRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
+                            itemRecyclerView.setAdapter(itemRecyclerAdapter);
                         }
                     }
                 });
@@ -114,13 +120,60 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
     }
 
     @Override
-    public void onRecyclerClick(View view, int position) {
-
+    public void onRecyclerClick(final View view, final int position) {
+        new AlertDialog.Builder(view.getContext())
+                .setTitle("Options")
+                .setItems(new CharSequence[]{"Update", "Delete"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                showDialog("Update", position);
+                                break;
+                            case 1:
+                                //dialogInterface.dismiss();
+                                new AlertDialog.Builder(view.getContext())
+                                        .setMessage("Are you sure you want to delete this item?")
+                                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                collectionReference.document(itemIdList.get(position))
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                                                itemNameList.remove(position);
+                                                                itemIdList.remove(position);
+                                                                itemRecyclerAdapter.notifyDataSetChanged();
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                dialogInterface.dismiss();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
+                                break;
+                        }
+                    }
+                })
+                .create()
+                .show();
     }
 
     @SuppressLint("InflateParams")
     @Override
     public void onClick(View view) {
+        showDialog("Add", 0);
+    }
+
+    @SuppressLint("InflateParams")
+    public void showDialog(final String type, final int position) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         dialogView = inflater.inflate(R.layout.dialog_add_item, null, false);
         subCategoryId = dialogView.findViewById(R.id.spinner_dialog_subcategory);
@@ -128,29 +181,31 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
         itemPrice = dialogView.findViewById(R.id.textInputEditText_item_price);
         itemImage = dialogView.findViewById(R.id.textInputEditText_item_image);
         subCategoryId.setAdapter(new ArrayAdapter<>(dialogView.getContext(), android.R.layout.simple_list_item_1, subCategoryNameList));
-        subCategoryId.setSelection(subCategoryPosition != 0 ? subCategoryPosition - 1 : subCategoryPosition);
+        subCategoryId.setSelection(subCategoryPosition /*!= 0 ? subCategoryPosition - 1 : subCategoryPosition*/);
         //subCategoryPosition != 0 ? subCategoryId.setSelection(subCategoryPosition - 1) : subCategoryId.setSelection(subCategoryPosition);
         itemMap = new HashMap<>();
 
-        new AlertDialog.Builder(view.getContext())
-                .setTitle("Add Item")
+        if (Objects.equals(type, "Update")) {
+            itemName.setText(itemNameList.get(position));
+            itemPrice.setText(itemPriceList.get(position));
+            itemImage.setText(itemImageList.get(position));
+        }
+
+        new AlertDialog.Builder(rootView.getContext())
+                .setTitle(type + " Item")
                 .setView(dialogView)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(type, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         itemMap.put("subCategoryId", subCategoryIdList.get(subCategoryId.getSelectedItemPosition()));
                         itemMap.put("id", 0);
                         itemMap.put("name", itemName.getText().toString());
-                        itemMap.put("price", Double.parseDouble(itemPrice.getText().toString()));
+                        itemMap.put("price", Double.parseDouble(itemPrice.getText().toString().isEmpty() ? "0" : itemPrice.getText().toString()));
                         itemMap.put("image", itemImage.getText().toString());
-                        db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items")
-                                .add(itemMap)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        if (Objects.equals(type, "Add"))
+                            addItemQuery(itemMap);
+                        else
+                            updateItemQuery(itemMap, position);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -161,5 +216,33 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                 })
                 .create()
                 .show();
+    }
+
+    public void addItemQuery(final Map<String, Object> itemMap) {
+        collectionReference
+                .add(itemMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
+                        itemIdList.add(documentReference.getId());
+                        itemNameList.add(itemMap.get("name").toString());
+                        itemPriceList.add(itemMap.get("price").toString());
+                        itemImageList.add(itemMap.get("image").toString());
+                        itemRecyclerAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private void updateItemQuery(Map<String, Object> itemMap, final int position) {
+        collectionReference.document(itemIdList.get(position))
+                .update(itemMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+                        itemRecyclerAdapter.notifyItemChanged(position);
+                    }
+                });
     }
 }

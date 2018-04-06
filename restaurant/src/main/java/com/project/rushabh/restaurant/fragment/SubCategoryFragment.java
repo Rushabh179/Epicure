@@ -82,8 +82,8 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            items.add("All");
-                            subCategoryIdList.add("");
+                            /*items.add("All");
+                            subCategoryIdList.add("");*/
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 items.add(document.getString("name"));
                                 subCategoryIdList.add(document.getId());
