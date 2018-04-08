@@ -618,7 +618,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                         sharedPreferences.getFloat(getString(R.string.spk_longitude), 0)));
                 orderMap.put("senderAddress", sharedPreferences.getString(getString(R.string.spk_address), ""));
                 orderMap.put("senderContact", sharedPreferences.getString(getString(R.string.spk_contact), ""));
-                orderMap.put("itemNames", orderList.get(0).item.name);
                 orderMap.put("totalPrice", txtTotal.getText().toString());
 
                 // Simulate network access.
@@ -627,6 +626,21 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(ItemActivity.this, "Order placed", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < orderList.size(); i++) {
+                        Map<String, Object> itemOrderMap = new HashMap<>();
+                        itemOrderMap.put("itemFirebaseId", orderList.get(i).item.firebaseId);
+                        itemOrderMap.put("itemName", orderList.get(i).item.name);
+                        itemOrderMap.put("itemUnitPrice", orderList.get(i).item.unitPrice);
+                        itemOrderMap.put("itemQuantity", orderList.get(i).quantity);
+                        itemOrderMap.put("itemExtendedPrice", orderList.get(i).extendedPrice);
+                        db.collection("orders").document(documentReference.getId()).collection("items").add(itemOrderMap)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(ItemActivity.this, "Item info sent", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        }
                     }
                 });
             } catch (InterruptedException e) {
