@@ -222,6 +222,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragment1
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.i(TAG, documentReference.getId());
+                                editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.spk_user_id), documentReference.getId());
+                                editor.apply();
                             }
                         });
             }

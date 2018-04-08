@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,11 +27,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.epicure.R;
@@ -69,6 +73,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     private String placeId;
     private FirebaseFirestore db;
     private DocumentReference documentReference;
+    private SharedPreferences sharedPreferences;
 
     /*
     * Holds all categories
@@ -127,6 +132,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         db = FirebaseFirestore.getInstance();
         documentReference = db.collection("restaurants").document(placeId);
         //Toast.makeText(this, intent.getStringExtra("restaurant_id"), Toast.LENGTH_SHORT).show();
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
 
         prepareData();
         Log.d("order of the calls", "oncreate after preparedata");
@@ -210,7 +216,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     /*
     * Prepares sample data to be used within the application
     */
-    @SuppressWarnings("StatementWithEmptyBody") //TODO: review and find better practice, Refer to TestData.class for original code
+    @SuppressWarnings("StatementWithEmptyBody")
+    //TODO: review and find better practice, Refer to TestData.class for original code
     private void prepareData() {
         categoryList = new ArrayList<>();
         subCategoryList = new ArrayList<>();
@@ -603,12 +610,28 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
+                Map<String, Object> orderMap = new HashMap<>();
+                orderMap.put("senderFirebaseId", sharedPreferences.getString(getString(R.string.spk_user_id), ""));
+                orderMap.put("receiverFirebaseId", placeId);
+                orderMap.put("senderEmail", sharedPreferences.getString(getString(R.string.spk_email), ""));
+                orderMap.put("senderLocation", new GeoPoint(sharedPreferences.getFloat(getString(R.string.spk_latitude), 0),
+                        sharedPreferences.getFloat(getString(R.string.spk_longitude), 0)));
+                orderMap.put("senderAddress", sharedPreferences.getString(getString(R.string.spk_address), ""));
+                orderMap.put("senderContact", sharedPreferences.getString(getString(R.string.spk_contact), ""));
+                orderMap.put("itemNames", orderList.get(0).item.name);
+                orderMap.put("totalPrice", txtTotal.getText().toString());
+
                 // Simulate network access.
-                Thread.sleep(2000);
+                Thread.sleep(1000);
+                db.collection("orders").add(orderMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(ItemActivity.this, "Order placed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } catch (InterruptedException e) {
                 return false;
             }
-
             return true;
         }
 

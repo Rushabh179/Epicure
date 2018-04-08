@@ -27,4 +27,10 @@
     <string name="manage_title_category">Category</string>
     <string name="manage_title_subcategory">Subcategory</string>
     <string name="manage_title_items">Items</string>
+
+    <string name="spk_notification_token">spk_notification_token</string>
+
+    <string name="token_registration_complete">token_registration_complete</string>
+    <string name="topic_global">topic_global</string>
+    <string name="push_notification">push_notification</string>
 </resources>
