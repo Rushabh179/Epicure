@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -50,10 +52,18 @@ import com.project.rushabh.epicure.util.CircleAnimationUtil;
 import com.steelkiwi.library.IncrementProductView;
 import com.steelkiwi.library.listener.OnStateListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback,
         OrderAdapter.IOrderAdapterCallback {
@@ -74,6 +84,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     private FirebaseFirestore db;
     private DocumentReference documentReference;
     private SharedPreferences sharedPreferences;
+    private SimpleDateFormat format;
 
     /*
     * Holds all categories
@@ -122,6 +133,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         addItemToCartAnimation(imageView, item, 1);
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +145,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         documentReference = db.collection("restaurants").document(placeId);
         //Toast.makeText(this, intent.getStringExtra("restaurant_id"), Toast.LENGTH_SHORT).show();
         sharedPreferences = getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
+        format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         prepareData();
         Log.d("order of the calls", "oncreate after preparedata");
@@ -569,7 +582,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
+                        dialog.dismiss();
                     }
                 })
                 .show();
@@ -595,7 +608,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
+                        dialog.dismiss();
                     }
                 })
                 .show();
@@ -609,43 +622,34 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     public class CompleteOrderTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            try {
-                Map<String, Object> orderMap = new HashMap<>();
-                orderMap.put("senderFirebaseId", sharedPreferences.getString(getString(R.string.spk_user_id), ""));
-                orderMap.put("receiverFirebaseId", placeId);
-                orderMap.put("senderEmail", sharedPreferences.getString(getString(R.string.spk_email), ""));
-                orderMap.put("senderLocation", new GeoPoint(sharedPreferences.getFloat(getString(R.string.spk_latitude), 0),
-                        sharedPreferences.getFloat(getString(R.string.spk_longitude), 0)));
-                orderMap.put("senderAddress", sharedPreferences.getString(getString(R.string.spk_address), ""));
-                orderMap.put("senderContact", sharedPreferences.getString(getString(R.string.spk_contact), ""));
-                orderMap.put("totalPrice", txtTotal.getText().toString());
-
-                // Simulate network access.
-                Thread.sleep(1000);
-                db.collection("orders").add(orderMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(ItemActivity.this, "Order placed", Toast.LENGTH_SHORT).show();
-                        for (int i = 0; i < orderList.size(); i++) {
-                        Map<String, Object> itemOrderMap = new HashMap<>();
-                        itemOrderMap.put("itemFirebaseId", orderList.get(i).item.firebaseId);
-                        itemOrderMap.put("itemName", orderList.get(i).item.name);
-                        itemOrderMap.put("itemUnitPrice", orderList.get(i).item.unitPrice);
-                        itemOrderMap.put("itemQuantity", orderList.get(i).quantity);
-                        itemOrderMap.put("itemExtendedPrice", orderList.get(i).extendedPrice);
-                        db.collection("orders").document(documentReference.getId()).collection("items").add(itemOrderMap)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(ItemActivity.this, "Item info sent", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        }
-                    }
-                });
-            } catch (InterruptedException e) {
-                return false;
+            Map<String, Object> orderMap = new HashMap<>();
+            List<Map<String, Object>> itemList = new ArrayList<>();
+            for (int i = 0; i < orderList.size(); i++) {
+                Map<String, Object> itemMap = new HashMap<>();
+                itemMap.put("itemId", orderList.get(i).item.firebaseId);
+                itemMap.put("name", orderList.get(i).item.name);
+                itemMap.put("unitPrice", orderList.get(i).item.unitPrice);
+                itemMap.put("quantity", orderList.get(i).quantity);
+                itemMap.put("extendedPrice", orderList.get(i).extendedPrice);
+                itemList.add(itemMap);
             }
+            orderMap.put("senderFirebaseId", sharedPreferences.getString(getString(R.string.spk_user_id), ""));
+            orderMap.put("receiverFirebaseId", placeId);
+            orderMap.put("senderEmail", sharedPreferences.getString(getString(R.string.spk_email), ""));
+            orderMap.put("senderLocation", new GeoPoint(sharedPreferences.getFloat(getString(R.string.spk_latitude), 0), sharedPreferences.getFloat(getString(R.string.spk_longitude), 0)));
+            orderMap.put("senderAddress", sharedPreferences.getString(getString(R.string.spk_address), ""));
+            orderMap.put("senderContact", sharedPreferences.getString(getString(R.string.spk_contact), ""));
+            orderMap.put("timeStamp", getDate(System.currentTimeMillis()));
+            orderMap.put("totalPrice", txtTotal.getText().toString());
+            orderMap.put("item", itemList);
+
+            // Simulate network access.
+            db.collection("orders").add(orderMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(ItemActivity.this, "Order placed", Toast.LENGTH_SHORT).show();
+                }
+            });
             return true;
         }
 
@@ -661,6 +665,33 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             showProgress(false);
             showMessage(false, getString(R.string.failed_order));
         }
+    }
+
+    private Date getDate(long time) {
+        Calendar cal = Calendar.getInstance();
+        TimeZone tz = cal.getTimeZone();//get your local time zone.
+        @SuppressLint("SimpleDateFormat")
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        //sdf.setTimeZone(tz);//set time zone.
+        String localTime = sdf.format(new Date(time));
+        Date date = new Date();
+        try {
+            date = sdf.parse(localTime);//get local date
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public Date getDateFromString(String datetoSaved) {
+        try {
+            Date date = format.parse(datetoSaved);
+            return date;
+        } catch (ParseException e) {
+            return null;
+        }
+
     }
 
     /**

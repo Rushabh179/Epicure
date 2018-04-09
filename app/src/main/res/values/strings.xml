@@ -35,7 +35,7 @@
     <string name="nav_drawer_sub_menu">Communicate</string>
     <string name="nav_drawer_sub_item1">Share</string>
 
-    <!-- Splash Screen-->
+    <!-- Splash Screen -->
     <string name="splash_screen_sign_up_btn"><![CDATA[Make an account >]]></string>
     <string name="splash_screen_login_btn"><![CDATA[Log into your account >]]></string>
     <string name="splash_screen_main_btn"><![CDATA[Continue without login >]]></string>
