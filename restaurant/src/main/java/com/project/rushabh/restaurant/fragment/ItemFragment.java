@@ -112,6 +112,7 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
                             }
                             itemRecyclerAdapter = new ManageRecyclerAdapter(itemNameList);
                             itemRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
+                            itemRecyclerAdapter.setOnRecyclerLongClickListener(onRecyclerClickListener);
                             itemRecyclerView.setAdapter(itemRecyclerAdapter);
                         }
                     }

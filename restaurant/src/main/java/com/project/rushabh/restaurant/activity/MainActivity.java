@@ -20,9 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.rushabh.restaurant.R;
 import com.project.rushabh.restaurant.adapter.SectionPagerAdapter;
@@ -100,6 +103,21 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        /*db.collection("orders").whereEqualTo("receiverFirebaseId", sharedPreferences.getString(getString(R.string.spk_restaurant_id), ""))
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Toast.makeText(MainActivity.this, "Error getting the order", Toast.LENGTH_SHORT).show();
+                        } else {
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                //Toast.makeText(MainActivity.this, doc.getId(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }
+                });*/
+
         displayFirebaseRegId();
     }
 
@@ -111,15 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(regId)) {
             Toast.makeText(this, regId, Toast.LENGTH_SHORT).show();
-            db.collection("restaurants").document("U6lfBtWHnjf3qyhD1mdn")
-                    .update("token", regId)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(MainActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
         } else
             Toast.makeText(this, "Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
     }

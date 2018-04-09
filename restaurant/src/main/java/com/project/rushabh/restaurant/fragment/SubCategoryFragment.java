@@ -111,8 +111,6 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            /*items.add("All");
-                            subCategoryIdList.add("");*/
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 subCategoryNameList.add(document.getString("name"));
                                 subCategoryIdList.add(document.getId());
@@ -120,6 +118,7 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
                             }
                             subCategoryRecyclerAdapter = new ManageRecyclerAdapter(subCategoryNameList);
                             subCategoryRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
+                            subCategoryRecyclerAdapter.setOnRecyclerLongClickListener(onRecyclerClickListener);
                             subCategoryRecyclerView.setAdapter(subCategoryRecyclerAdapter);
                         }
                     }
@@ -271,7 +270,5 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
                                 document.getReference().delete();
                     }
                 });
-
-
     }
 }

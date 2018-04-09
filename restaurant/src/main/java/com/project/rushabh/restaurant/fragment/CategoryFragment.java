@@ -101,6 +101,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
                             }
                             categoryRecyclerAdapter = new ManageRecyclerAdapter(categoryNameList);
                             categoryRecyclerAdapter.setOnRecyclerClickListener(onRecyclerClickListener);
+                            categoryRecyclerAdapter.setOnRecyclerLongClickListener(onRecyclerClickListener);
                             categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
                         }
                     }
