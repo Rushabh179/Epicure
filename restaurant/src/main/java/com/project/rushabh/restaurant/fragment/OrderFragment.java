@@ -22,17 +22,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.restaurant.R;
 import com.project.rushabh.restaurant.adapter.OrderRecyclerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by rushabh.modi on 04/04/18.
- *
+ * <p>
  * A placeholder fragment containing a simple view.
  */
 
 public class OrderFragment extends Fragment {
 
-    //private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_SECTION_NUMBER = "section_number";
     private View rootView;
     private RecyclerView orderRecyclerView;
     private OrderRecyclerAdapter orderRecyclerAdapter;
@@ -41,24 +43,26 @@ public class OrderFragment extends Fragment {
     private FirebaseFirestore db;
 
     private Map<String, Object> orderMap;
+    private List<String> senderEmailList;
 
     public OrderFragment() {
     }
 
-    /*
+    /**
      * Returns a new instance of this fragment for the given section number.
-     *//*
+     */
     public static OrderFragment newInstance(int sectionNumber) {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
-    }*/
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        senderEmailList = new ArrayList<>();
         assert getContext() != null;
         sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_pref_file_name), Context.MODE_PRIVATE);
         db = FirebaseFirestore.getInstance();
@@ -70,9 +74,11 @@ public class OrderFragment extends Fragment {
                             Toast.makeText(getContext(), "Error getting the order", Toast.LENGTH_SHORT).show();
                         } else {
                             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                senderEmailList.add(doc.getString("senderEmail"));
                                 //Toast.makeText(MainActivity.this, doc.getId(), Toast.LENGTH_SHORT).show();
-
                             }
+                            orderRecyclerAdapter = new OrderRecyclerAdapter(senderEmailList);
+                            orderRecyclerView.setAdapter(orderRecyclerAdapter);
                         }
                     }
                 });

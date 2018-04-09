@@ -9,11 +9,19 @@ import android.widget.TextView;
 
 import com.project.rushabh.restaurant.R;
 
+import java.util.List;
+
 /**
  * Created by rushabh.modi on 09/04/18.
  */
 
 public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdapter.ViewHolder> {
+
+    List<String> senderEmailList;
+
+    public OrderRecyclerAdapter(List<String> senderEmailList) {
+        this.senderEmailList = senderEmailList;
+    }
 
     @NonNull
     @Override
@@ -25,12 +33,12 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.orderEmailText.setText(senderEmailList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return senderEmailList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
