@@ -1,7 +1,9 @@
 package com.project.rushabh.restaurant.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,12 +52,14 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
     private ManageRecyclerAdapter itemRecyclerAdapter;
     private List<String> itemIdList, itemNameList, itemPriceList, itemImageList, subCategoryIdList, subCategoryNameList;
     private FirebaseFirestore db;
+    private DocumentReference documentReference;
     private CollectionReference collectionReference;
     private int subCategoryPosition;
     private View rootView, dialogView;
     private Spinner subCategoryId;
     private TextInputEditText itemName, itemPrice, itemImage;
     private Map<String, Object> itemMap;
+    private SharedPreferences sharedPreferences;
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
@@ -66,8 +70,6 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
         this.subCategoryPosition = subCategoryPosition;
         this.subCategoryIdList = subCategoryIdList;
         this.subCategoryNameList = subCategoryNameList;
-        /*this.subCategoryNameList.remove(0);
-        this.subCategoryIdList.remove(0);*/
     }
 
     @Override
@@ -75,11 +77,10 @@ public class ItemFragment extends Fragment implements OnRecyclerClickListener, V
         super.onCreate(savedInstanceState);
         onRecyclerClickListener = this;
         db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items");
-        /*if (subCategoryPosition == 0)
-            itemBySubCategoryQuery = collectionReference;
-        else*/
-        //itemBySubCategoryQuery = collectionReference.whereEqualTo("subCategoryId", subCategoryIdList.get(subCategoryPosition /*- 1*/));
+        assert getActivity() != null;
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.shared_pref_file_name), Context.MODE_PRIVATE);
+        documentReference = db.collection("restaurants").document(sharedPreferences.getString(getString(R.string.spk_restaurant_id),""));
+        collectionReference = documentReference.collection("items");
     }
 
     @Override

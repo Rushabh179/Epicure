@@ -1,7 +1,9 @@
 package com.project.rushabh.restaurant.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -53,6 +55,7 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
     private ManageRecyclerAdapter subCategoryRecyclerAdapter;
     private List<String> subCategoryIdList, subCategoryNameList, categoryIdList, categoryNameList;
     private FirebaseFirestore db;
+    private DocumentReference documentReference;
     private CollectionReference collectionReference;
     private int categoryPosition;
     private Query subCategoryQuery;
@@ -60,6 +63,7 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
     private Spinner categoryId;
     private TextInputEditText subCategoryName;
     private Map<String, Object> itemMap;
+    private SharedPreferences sharedPreferences;
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
@@ -79,7 +83,10 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
         super.onCreate(savedInstanceState);
         onRecyclerClickListener = this;
         db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("subcategories");
+        assert getActivity() != null;
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.shared_pref_file_name), Context.MODE_PRIVATE);
+        documentReference = db.collection("restaurants").document(sharedPreferences.getString(getString(R.string.spk_restaurant_id),""));
+        collectionReference = documentReference.collection("subcategories");
         if (categoryPosition == 0)
             subCategoryQuery = collectionReference;
         else
@@ -253,7 +260,7 @@ public class SubCategoryFragment extends Fragment implements OnRecyclerClickList
                         subCategoryRecyclerAdapter.notifyDataSetChanged();
                     }
                 });
-        db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items")
+        documentReference.collection("items")
                 .whereEqualTo("subCategoryId", subCategoryIdList.get(position))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

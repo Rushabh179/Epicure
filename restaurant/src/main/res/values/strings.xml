@@ -19,7 +19,7 @@
     <string name="tab_text_1">Orders</string>
     <string name="tab_text_2">Manage</string>
     <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="manage_categories_btn">Categories</string>
     <string name="manage_subcategories_btn">Subcategories</string>
@@ -33,4 +33,13 @@
     <string name="token_registration_complete">token_registration_complete</string>
     <string name="topic_global">topic_global</string>
     <string name="push_notification">push_notification</string>
+    <string name="spk_restaurant_id">spk_restaurant_id</string>
+    <string name="spk_email">spk_email</string>
+    <string name="spk_password">spk_password</string>
+    <string name="spk_name">spk_name</string>
+    <string name="spk_address">spk_address</string>
+    <string name="spk_contact">spk_contact</string>
+    <string name="spk_latitude">spk_latitude</string>
+    <string name="spk_longitude">spk_longitude</string>
+    <string name="spk_information">spk_information</string>
 </resources>

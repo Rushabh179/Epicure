@@ -1,7 +1,9 @@
 package com.project.rushabh.restaurant.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,10 +52,12 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
     private ManageRecyclerAdapter categoryRecyclerAdapter;
     private List<String> categoryIdList, categoryNameList, subCategoryIdList;
     private FirebaseFirestore db;
+    private DocumentReference documentReference;
     private CollectionReference collectionReference;
     private View rootView, dialogView;
     private TextInputEditText categoryName;
     private Map<String, Object> itemMap;
+    private SharedPreferences sharedPreferences;
 
     private OnRecyclerClickListener onRecyclerClickListener;
 
@@ -65,7 +69,10 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         onRecyclerClickListener = this;
-        collectionReference = db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("category");
+        assert getContext() != null;
+        sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_pref_file_name), Context.MODE_PRIVATE);
+        documentReference = db.collection("restaurants").document(sharedPreferences.getString(getString(R.string.spk_restaurant_id),""));
+        collectionReference = documentReference.collection("category");
     }
 
     @Override
@@ -230,7 +237,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
                     }
                 });
 
-        db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("subcategories")
+        documentReference.collection("subcategories")
                 .whereEqualTo("categoryId", categoryIdList.get(position))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -242,7 +249,7 @@ public class CategoryFragment extends Fragment implements OnRecyclerClickListene
                                 document.getReference().delete();
                             }
                         for (String subCategoryId : subCategoryIdList)
-                            db.collection("restaurants").document("BJSdynFnNrQbGXmX7iMp").collection("items")
+                            documentReference.collection("items")
                                     .whereEqualTo("subCategoryId", subCategoryId)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

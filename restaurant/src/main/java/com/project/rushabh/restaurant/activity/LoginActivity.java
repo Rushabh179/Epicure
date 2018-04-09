@@ -9,13 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.restaurant.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,11 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    TextInputEditText emailLoginText, passwordLoginText;
-
-    Button loginBtn;
+    private TextInputEditText emailLoginText, passwordLoginText;
+    private String email, password;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +40,10 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         emailLoginText = findViewById(R.id.textInputEditText_login_email);
         passwordLoginText = findViewById(R.id.textInputEditText_login_password);
-
-        loginBtn = findViewById(R.id.btn_login);
 
         sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
     }
@@ -50,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                String email = emailLoginText.getText().toString();
-                String password = passwordLoginText.getText().toString();
+                email = emailLoginText.getText().toString();
+                password = passwordLoginText.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -77,11 +78,31 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     editor = sharedPreferences.edit();
-                                    editor.putBoolean(getString(R.string.spk_is_logged_in), true).apply();
-                                    Toast.makeText(LoginActivity.this, "signed in", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    editor.putBoolean(getString(R.string.spk_is_logged_in), true);
+                                    db.collection("restaurants").whereEqualTo("email", email).get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                                            editor.putString(getString(R.string.spk_restaurant_id), document.getId());
+                                                            editor.putString(getString(R.string.spk_email), email);
+                                                            editor.putString(getString(R.string.spk_password), password);
+                                                            editor.putString(getString(R.string.spk_name), document.getString("name"));
+                                                            editor.putString(getString(R.string.spk_information), document.getString("information"));
+                                                            editor.putString(getString(R.string.spk_address), document.getString("address"));
+                                                            editor.putString(getString(R.string.spk_contact), document.getString("contact"));
+                                                            editor.putFloat(getString(R.string.spk_latitude), (float) document.getGeoPoint("location").getLatitude());
+                                                            editor.putFloat(getString(R.string.spk_longitude), (float) document.getGeoPoint("location").getLongitude());
+                                                        }
+                                                        editor.apply();
+                                                        Toast.makeText(LoginActivity.this, "signed in", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         });

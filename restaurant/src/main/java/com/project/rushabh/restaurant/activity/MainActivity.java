@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.rushabh.restaurant.R;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     private FirebaseFirestore db;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         db = FirebaseFirestore.getInstance();
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -172,7 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            editor = sharedPreferences.edit();
+            FirebaseAuth.getInstance().signOut();
+            editor.putBoolean(getString(R.string.spk_is_logged_in), false).apply();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
