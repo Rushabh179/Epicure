@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.rushabh.epicure.R;
+import com.project.rushabh.epicure.fragment.OrderFragment;
 import com.project.rushabh.epicure.fragment.PlacesFragment;
 
 import java.util.Objects;
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_item_2) {
 
         } else if (id == R.id.nav_item_3) {
-
+            fragmentSetter(new OrderFragment());
         } else if (id == R.id.nav_item_4) {
 
         } else if (id == R.id.nav_item_5) {

@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -42,7 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.adapter.CategoryPagerAdapter;
 import com.project.rushabh.epicure.adapter.ItemAdapter;
-import com.project.rushabh.epicure.adapter.OrderAdapter;
+import com.project.rushabh.epicure.adapter.OrderCartAdapter;
 import com.project.rushabh.epicure.model.Category;
 import com.project.rushabh.epicure.model.Item;
 import com.project.rushabh.epicure.model.Order;
@@ -55,18 +53,16 @@ import com.steelkiwi.library.listener.OnStateListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 
 public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItemAdapterCallback,
-        OrderAdapter.IOrderAdapterCallback {
+        OrderCartAdapter.IOrderAdapterCallback {
 
     private DrawerLayout drawer;
     private RelativeLayout rlCart;
@@ -77,14 +73,13 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     private Button btnCompleteOrder;
     private ProgressDialog dialog;
 
-    private OrderAdapter orderAdapter;
+    private OrderCartAdapter orderCartAdapter;
 
     private Intent intent;
-    private String placeId;
+    private String placeId, placeName;
     private FirebaseFirestore db;
     private DocumentReference documentReference;
     private SharedPreferences sharedPreferences;
-    private SimpleDateFormat format;
 
     /*
     * Holds all categories
@@ -141,11 +136,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
 
         intent = getIntent();
         placeId = intent.getStringExtra("restaurant_id");
+        placeName = intent.getStringExtra("restaurant_name");
         db = FirebaseFirestore.getInstance();
         documentReference = db.collection("restaurants").document(placeId);
         //Toast.makeText(this, intent.getStringExtra("restaurant_id"), Toast.LENGTH_SHORT).show();
         sharedPreferences = getSharedPreferences(getString(R.string.shared_pref_file_name), MODE_PRIVATE);
-        format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         prepareData();
         Log.d("order of the calls", "oncreate after preparedata");
@@ -159,8 +154,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
 
         // set
         rvOrder.setLayoutManager(new LinearLayoutManager(ItemActivity.this));
-        orderAdapter = new OrderAdapter(ItemActivity.this, orderList);
-        rvOrder.setAdapter(orderAdapter);
+        orderCartAdapter = new OrderCartAdapter(ItemActivity.this, orderList);
+        rvOrder.setAdapter(orderCartAdapter);
 
         // Get the ViewPager and set it's CategoryPagerAdapter so that it can display items
         ViewPager vpItem = findViewById(R.id.viewPager_item);
@@ -510,7 +505,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             orderList.add(new Order(item, quantity));
         }
 
-        orderAdapter.notifyDataSetChanged();
+        orderCartAdapter.notifyDataSetChanged();
         rvOrder.smoothScrollToPosition(orderList.size() - 1);
         updateOrderTotal();
         updateBadge();
@@ -635,12 +630,14 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             }
             orderMap.put("senderFirebaseId", sharedPreferences.getString(getString(R.string.spk_user_id), ""));
             orderMap.put("receiverFirebaseId", placeId);
+            orderMap.put("restaurantName", placeName);
             orderMap.put("senderEmail", sharedPreferences.getString(getString(R.string.spk_email), ""));
             orderMap.put("senderLocation", new GeoPoint(sharedPreferences.getFloat(getString(R.string.spk_latitude), 0), sharedPreferences.getFloat(getString(R.string.spk_longitude), 0)));
             orderMap.put("senderAddress", sharedPreferences.getString(getString(R.string.spk_address), ""));
             orderMap.put("senderContact", sharedPreferences.getString(getString(R.string.spk_contact), ""));
             orderMap.put("timeStamp", getDate(System.currentTimeMillis()));
             orderMap.put("totalPrice", txtTotal.getText().toString());
+            orderMap.put("status", "New");
             orderMap.put("item", itemList);
 
             // Simulate network access.
@@ -671,8 +668,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         Calendar cal = Calendar.getInstance();
         TimeZone tz = cal.getTimeZone();//get your local time zone.
         @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         //sdf.setTimeZone(tz);//set time zone.
         String localTime = sdf.format(new Date(time));
         Date date = new Date();
@@ -682,16 +679,6 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             e.printStackTrace();
         }
         return date;
-    }
-
-    public Date getDateFromString(String datetoSaved) {
-        try {
-            Date date = format.parse(datetoSaved);
-            return date;
-        } catch (ParseException e) {
-            return null;
-        }
-
     }
 
     /**
@@ -715,7 +702,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
     */
     private void clearAll() {
         orderList.clear();
-        orderAdapter.notifyDataSetChanged();
+        orderCartAdapter.notifyDataSetChanged();
 
         updateBadge();
         updateOrderTotal();

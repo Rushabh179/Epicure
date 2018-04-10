@@ -21,13 +21,13 @@ import java.util.ArrayList;
  * Created by brkckr on 6.12.2017.
  */
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+public class OrderCartAdapter extends RecyclerView.Adapter<OrderCartAdapter.OrderViewHolder> {
     private ArrayList<Order> orderList;
     private Activity activity;
 
     private IOrderAdapterCallback orderCallback;
 
-    public OrderAdapter(Activity activity, ArrayList<Order> orderList) {
+    public OrderCartAdapter(Activity activity, ArrayList<Order> orderList) {
         this.activity = activity;
         this.orderList = orderList;
         orderCallback = (IOrderAdapterCallback) activity;

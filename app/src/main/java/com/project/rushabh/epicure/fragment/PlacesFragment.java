@@ -99,6 +99,8 @@ public class PlacesFragment extends Fragment implements OnRecyclerClickListener 
 
     @Override
     public void onRecyclerClick(View view, int position) {
-        startActivity(new Intent(getContext(), ItemActivity.class).putExtra("restaurant_id", placesIdList.get(position)));
+        startActivity(new Intent(getContext(), ItemActivity.class)
+                .putExtra("restaurant_id", placesIdList.get(position))
+                .putExtra("restaurant_name", placesNameList.get(position)));
     }
 }

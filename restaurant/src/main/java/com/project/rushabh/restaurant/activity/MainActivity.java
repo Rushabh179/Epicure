@@ -1,15 +1,21 @@
 package com.project.rushabh.restaurant.activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.rushabh.restaurant.R;
@@ -52,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    private NotificationCompat.Builder pushNotificationBuilder;
+    private NotificationManager pushNotificationManager;
+    private PendingIntent pushPendingIntent;
+    private Intent intent;
+    private int uniqueID = 9;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -103,22 +114,51 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        /*db.collection("orders").whereEqualTo("receiverFirebaseId", sharedPreferences.getString(getString(R.string.spk_restaurant_id), ""))
+        db.collection("orders")
+                .whereEqualTo("receiverFirebaseId", sharedPreferences.getString(getString(R.string.spk_restaurant_id), ""))
+                .whereEqualTo("status", "New")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                         if (e != null) {
                             Toast.makeText(MainActivity.this, "Error getting the order", Toast.LENGTH_SHORT).show();
                         } else {
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                //Toast.makeText(MainActivity.this, doc.getId(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Changed", Toast.LENGTH_LONG).show();
+                            getNotification();
 
-                            }
                         }
                     }
-                });*/
+                });
 
         displayFirebaseRegId();
+    }
+
+    private void getNotification() {
+        intent = new Intent(getIntent());
+        pushPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pushNotificationBuilder = new NotificationCompat.Builder(this, "com.project.rushabh.restaurant.activity");
+        pushNotificationBuilder
+                .setAutoCancel(true)
+                .setSmallIcon(android.R.drawable.stat_notify_chat)
+                .setTicker("New order")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setWhen(System.currentTimeMillis())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("New Order"))
+                .setContentTitle("New Order")
+                .setContentText("New Order")
+                .addAction(android.R.drawable.arrow_up_float, "Open", pushPendingIntent)
+                .setContentIntent(pushPendingIntent);
+        Toast.makeText(MainActivity.this, "Changed Notification", Toast.LENGTH_LONG).show();
+        //Issue notification
+        pushNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("notify_001",
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            pushNotificationManager.createNotificationChannel(channel);
+        }
+        pushNotificationManager.notify(uniqueID, pushNotificationBuilder.build());
+
     }
 
     private void displayFirebaseRegId() {
@@ -184,12 +224,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             editor = sharedPreferences.edit();
             FirebaseAuth.getInstance().signOut();
             editor.putBoolean(getString(R.string.spk_is_logged_in), false).apply();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+        }
+
+        if (id == R.id.notification_test) {
+            getNotification();
         }
         return super.onOptionsItemSelected(item);
     }

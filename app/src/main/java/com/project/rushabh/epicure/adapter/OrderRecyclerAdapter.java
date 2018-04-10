@@ -1,4 +1,4 @@
-package com.project.rushabh.restaurant.adapter;
+package com.project.rushabh.epicure.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,20 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.project.rushabh.restaurant.R;
+import com.project.rushabh.epicure.R;
 
 import java.util.List;
 
 /**
- * Created by rushabh.modi on 09/04/18.
+ * Created by rushabh.modi on 10/04/18.
  */
 
 public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdapter.ViewHolder> {
 
-    List<String> senderEmailList, timeStampList, itemCountList, statusList;
+    List<String> placeNameList, timeStampList, itemCountList, statusList;
 
-    public OrderRecyclerAdapter(List<String> senderEmailList, List<String> timeStampList, List<String> itemCountList, List<String> statusList) {
-        this.senderEmailList = senderEmailList;
+    public OrderRecyclerAdapter(List<String> placeNameList, List<String> timeStampList, List<String> itemCountList, List<String> statusList) {
+        this.placeNameList = placeNameList;
         this.timeStampList = timeStampList;
         this.itemCountList = itemCountList;
         this.statusList = statusList;
@@ -36,7 +36,7 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.orderEmailText.setText(senderEmailList.get(position));
+        holder.orderPlaceNameText.setText(placeNameList.get(position));
         holder.orderDateTimeText.setText(timeStampList.get(position));
         holder.orderCountText.setText(itemCountList.get(position));
         holder.orderStatusText.setText(statusList.get(position));
@@ -44,16 +44,16 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
 
     @Override
     public int getItemCount() {
-        return senderEmailList.size();
+        return placeNameList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView orderEmailText, orderDateTimeText, orderCountText, orderStatusText;
+        TextView orderPlaceNameText, orderDateTimeText, orderCountText, orderStatusText;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            orderEmailText = itemView.findViewById(R.id.text_order_email);
+            orderPlaceNameText = itemView.findViewById(R.id.text_order_restaurant);
             orderDateTimeText = itemView.findViewById(R.id.text_order_date_time);
             orderCountText = itemView.findViewById(R.id.text_order_itemcount);
             orderStatusText = itemView.findViewById(R.id.text_order_status);

@@ -42,4 +42,5 @@
     <string name="spk_latitude">spk_latitude</string>
     <string name="spk_longitude">spk_longitude</string>
     <string name="spk_information">spk_information</string>
+    <string name="action_user_view">User View</string>
 </resources>
