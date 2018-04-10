@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">delivery</string>
+    <string name="login_username_hint">E-mail</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_btn">Login</string>
+    <string name="spk_is_logged_in">spk_is_logged_in</string>
+    <string name="shared_pref_file_name">shared_pref_file_name</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="to_sign_up">Don\'t own an account?\nSign Up instead</string>
+    <string name="spk_deliver_id">spk_deliver_id</string>
+    <string name="spk_email">spk_email</string>
+    <string name="spk_password">spk_password</string>
+    <string name="spk_name">spk_name</string>
+    <string name="spk_contact">spk_contact</string>
 </resources>
