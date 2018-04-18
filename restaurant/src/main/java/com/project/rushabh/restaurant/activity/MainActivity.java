@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         if (e != null) {
                             Toast.makeText(MainActivity.this, "Error getting the order", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MainActivity.this, "Changed", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this, "Changed", Toast.LENGTH_LONG).show();
                             getNotification();
 
                         }
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 .setContentText("New Order")
                 .addAction(android.R.drawable.arrow_up_float, "Open", pushPendingIntent)
                 .setContentIntent(pushPendingIntent);
-        Toast.makeText(MainActivity.this, "Changed Notification", Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.this, "Changed Notification", Toast.LENGTH_LONG).show();
         //Issue notification
         pushNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -93,10 +92,10 @@ public class MainActivity extends AppCompatActivity
 
         Log.e(TAG, "Firebase reg id: " + regId);
 
-        if (!TextUtils.isEmpty(regId))
+        /*if (!TextUtils.isEmpty(regId))
             Toast.makeText(this, regId, Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this, "Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

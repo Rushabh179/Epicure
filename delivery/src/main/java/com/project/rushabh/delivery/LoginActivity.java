@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     editor = sharedPreferences.edit();
                                     editor.putBoolean(getString(R.string.spk_is_logged_in), true);
-                                    db.collection("restaurants").whereEqualTo("email", email).get()
+                                    db.collection("deliver").whereEqualTo("email", email).get()
                                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
