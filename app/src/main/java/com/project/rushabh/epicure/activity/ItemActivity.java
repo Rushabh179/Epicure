@@ -167,6 +167,11 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
         TabLayout tabCategory = findViewById(R.id.tab_category);
         tabCategory.setupWithViewPager(vpItem);
 
+        if (tabCategory.getTabCount() <= 3)
+            tabCategory.setTabMode(TabLayout.MODE_FIXED);
+        else
+            tabCategory.setTabMode(TabLayout.MODE_SCROLLABLE);
+
         for (int i = 0; i < tabCategory.getTabCount(); i++) {
             TabLayout.Tab tab = tabCategory.getTabAt(i);
             if (tab != null) {
@@ -243,8 +248,8 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
             Log.d("order of the calls", document.getString("name"));
             categoryList.add(new Category(document.getId(),
                     (int) ((long) document.get("id")),
-                    document.getString("name"),
-                    R.drawable.all));
+                    document.getString("name")
+                   /* R.drawable.all*/));
         }
 
         Task<QuerySnapshot> subCategoryTask = documentReference.collection("subcategories").get();

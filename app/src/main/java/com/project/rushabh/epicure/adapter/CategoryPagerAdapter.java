@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.rushabh.epicure.R;
@@ -53,10 +52,10 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
         @SuppressLint("InflateParams") View v = LayoutInflater.from(context).inflate(R.layout.tab_item, null);
 
         TextView txtCategoryName = v.findViewById(R.id.txtCategoryName);
-        ImageView imgCategoryIcon = v.findViewById(R.id.imgCategoryIcon);
+        //ImageView imgCategoryIcon = v.findViewById(R.id.imgCategoryIcon);
 
         txtCategoryName.setText(solutionList.get(position).category.name);
-        imgCategoryIcon.setImageResource(solutionList.get(position).category.resourceId);
+        //imgCategoryIcon.setImageResource(solutionList.get(position).category.resourceId);
 
         return v;
     }

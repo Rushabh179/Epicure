@@ -9,13 +9,13 @@
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/imgCategoryIcon"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_30sdp"
         android:clickable="false"
         android:contentDescription="@string/image_contentdescription"
-        tools:src="@drawable/food" />
+        tools:src="@drawable/food" />-->
 
     <TextView
         android:id="@+id/txtCategoryName"
@@ -24,7 +24,7 @@
         android:clickable="false"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_17sdp"
         android:textStyle="bold"
         tools:text="Tab" />
 

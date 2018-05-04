@@ -25,6 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.rushabh.epicure.R;
 import com.project.rushabh.epicure.fragment.OrderFragment;
 import com.project.rushabh.epicure.fragment.PlacesFragment;
+import com.project.rushabh.epicure.fragment.ProfileFragment;
 
 import java.util.Objects;
 
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_item_3) {
             fragmentSetter(new OrderFragment());
         } else if (id == R.id.nav_item_4) {
+            fragmentSetter(new ProfileFragment());
 
         } else if (id == R.id.nav_item_5) {
             editor = sharedPreferences.edit();

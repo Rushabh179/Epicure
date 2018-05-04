@@ -10,12 +10,12 @@ public class Category implements Serializable {
     public String firebaseId;
     public int id;
     public String name;
-    public int resourceId;
+    //public int resourceId;
 
-    public Category(String firebaseId, int id, String name, int resourceId) {
+    public Category(String firebaseId, int id, String name/*, int resourceId*/) {
         this.firebaseId = firebaseId;
         this.id = id;
         this.name = name;
-        this.resourceId = resourceId;
+        //this.resourceId = resourceId;
     }
 }
