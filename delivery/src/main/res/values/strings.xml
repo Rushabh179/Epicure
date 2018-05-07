@@ -12,5 +12,5 @@
     <string name="spk_password">spk_password</string>
     <string name="spk_name">spk_name</string>
     <string name="spk_contact">spk_contact</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_profile">Profile</string>
 </resources>

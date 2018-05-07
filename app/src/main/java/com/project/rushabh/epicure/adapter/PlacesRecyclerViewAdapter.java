@@ -160,6 +160,7 @@ public class PlacesRecyclerViewAdapter extends RecyclerView.Adapter<PlacesRecycl
                         }
                     }
                 });
+
         new AlertDialog.Builder(context)
                 .setTitle("Restaurant Info")
                 .setView(dialogView)

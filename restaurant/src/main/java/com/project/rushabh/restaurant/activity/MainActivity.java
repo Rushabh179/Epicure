@@ -25,7 +25,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -167,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "Firebase reg id: " + regId);
 
         if (!TextUtils.isEmpty(regId)) {
-            Toast.makeText(this, regId, Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, regId, Toast.LENGTH_SHORT).show();
+        } //else
+            //Toast.makeText(this, "Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -223,11 +222,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            editor = sharedPreferences.edit();
-            FirebaseAuth.getInstance().signOut();
-            editor.putBoolean(getString(R.string.spk_is_logged_in), false).apply();
-            startActivity(new Intent(this, LoginActivity.class));
+        if (id == R.id.action_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
             finish();
         }
 

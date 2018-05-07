@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity
             fragmentSetter(new OrderFragment());
         } else if (id == R.id.nav_item_4) {
             fragmentSetter(new ProfileFragment());
-
         } else if (id == R.id.nav_item_5) {
             editor = sharedPreferences.edit();
             FirebaseAuth.getInstance().signOut();

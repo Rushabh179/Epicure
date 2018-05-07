@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_dialog_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_dialog_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/editText_dialog_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_dialog_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_dialog_email"
+            tools:text="modi.rushabh179@gmail.com"/>
+
+        <TextView
+            android:id="@+id/text_dialog_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_dialog_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_dialog_email"/>
+
+        <TextView
+            android:id="@+id/editText_dialog_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_17sdp"
+            android:textColor="#000"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_dialog_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_dialog_price"
+            tools:text="Price"/>
+
+        <TextView
+            android:id="@+id/text_dialog_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_dialog_phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_dialog_price"/>
+
+        <TextView
+            android:id="@+id/editText_dialog_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_dialog_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_dialog_phone"
+            tools:text="9999999999"/>
+
+        <TextView
+            android:id="@+id/text_dialog_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_dialog_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_dialog_phone"/>
+
+        <TextView
+            android:id="@+id/editText_dialog_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_17sdp"
+            android:textColor="#000"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_dialog_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_dialog_address"
+            tools:text="Address"/>
+
+        <TextView
+            android:id="@+id/text_dialog_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_dialog_items"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_dialog_address"/>
+
+        <TextView
+            android:id="@+id/editText_dialog_items"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_dialog_items"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_dialog_items"
+            tools:text="item1, item2"/>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

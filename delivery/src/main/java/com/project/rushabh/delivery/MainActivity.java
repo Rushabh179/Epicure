@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
 
     private RecyclerView orderRecyclerView;
-    private List<String> placeNameList, senderEmailList, timeStampList, itemCountList, statusList;
+    private List<String> orderIdList, placeNameList, senderEmailList, timeStampList, itemCountList, statusList;
     private List<List<Map<String, Object>>> itemList;
     private OrderAdapter orderAdapter;
 
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         orderRecyclerView = findViewById(R.id.recyclerView_order);
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         orderRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        orderIdList = new ArrayList<>();
         placeNameList = new ArrayList<>();
         senderEmailList = new ArrayList<>();
         timeStampList = new ArrayList<>();
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (Objects.equals(document.getString("deliverFirebaseId"),
                                         sharedPreferences.getString(getString(R.string.spk_deliver_id), ""))) { //Todo: Find a proper method
+                                    orderIdList.add(document.getId());
                                     placeNameList.add(document.getString("restaurantName"));
                                     senderEmailList.add(document.getString("senderEmail"));
                                     timeStampList.add(document.getDate("timeStamp").toString());
@@ -71,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                             for (int i = 0; i < itemList.size(); i++)
-                                itemCountList.add(Integer.toString(itemList.get(i).size())+" items");
+                                itemCountList.add(Integer.toString(itemList.get(i).size()) + " items");
                             //Toast.makeText(getContext(), i + Integer.toString(itemList.get(i).size()), Toast.LENGTH_SHORT).show();
-                            orderAdapter = new OrderAdapter(placeNameList, senderEmailList, timeStampList, itemCountList, statusList);
+                            orderAdapter = new OrderAdapter(getApplicationContext(), orderIdList, placeNameList, senderEmailList, timeStampList, itemCountList, statusList);
                             orderRecyclerView.setAdapter(orderAdapter);
                         }
                     }
@@ -95,17 +96,14 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            editor = sharedPreferences.edit();
-            FirebaseAuth.getInstance().signOut();
-            editor.putBoolean(getString(R.string.spk_is_logged_in), false).apply();
-            startActivity(new Intent(this, LoginActivity.class));
+        if (id == R.id.action_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
             finish();
         }
 
-        if (id == R.id.notification_test) {
+       /* if (id == R.id.notification_test) {
             getNotification();
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

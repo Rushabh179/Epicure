@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/text_profile_name"
+            app:layout_constraintEnd_toStartOf="@+id/editText_profile_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/editText_profile_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_17sdp"
+            android:textColor="#000"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_profile_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_profile_email"
+            tools:text="deliver@gmail.com"/>
+
+        <TextView
+            android:id="@+id/text_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/text_profile_phone"
+            app:layout_constraintEnd_toStartOf="@+id/editText_profile_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_email"/>
+
+        <EditText
+            android:id="@+id/editText_profile_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_profile_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_profile_name"
+            tools:text="Person name"/>
+
+        <!--<TextView
+            android:id="@+id/text_profile_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info:"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/text_profile_address"
+            app:layout_constraintEnd_toStartOf="@+id/editText_profile_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_name"/>
+
+        <EditText
+            android:id="@+id/editText_profile_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_profile_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_profile_info"
+            tools:text="Fast food"/>
+
+        <TextView
+            android:id="@+id/text_profile_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Address:"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/text_profile_phone"
+            app:layout_constraintEnd_toStartOf="@+id/editText_profile_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_info"/>
+
+        <EditText
+            android:id="@+id/editText_profile_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_profile_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_profile_address"
+            tools:text="@tools:sample/lorem/random"/>-->
+
+        <TextView
+            android:id="@+id/text_profile_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone:"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_profile_save"
+            app:layout_constraintEnd_toStartOf="@+id/editText_profile_phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_name"/>
+
+        <EditText
+            android:id="@+id/editText_profile_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_profile_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_profile_phone"
+            tools:text="9999999999"/>
+
+        <Button
+            android:id="@+id/btn_profile_save"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="#6680cf"
+            android:text="Save"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_profile_logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_profile_phone"/>
+
+        <Button
+            android:id="@+id/btn_profile_logout"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="#cf6666"
+            android:text="Logout"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_profile_save"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

@@ -16,13 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -50,7 +47,7 @@ public class OrderFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private FirebaseFirestore db;
 
-    private List<String> senderEmailList, timeStampList, itemCountList, statusList;
+    private List<String> orderIdList, senderEmailList, timeStampList, itemCountList, statusList;
     private List<List<Map<String, Object>>> itemList;
 
     private NotificationCompat.Builder pushNotificationBuilder;
@@ -87,6 +84,7 @@ public class OrderFragment extends Fragment {
         orderRecyclerView = rootView.findViewById(R.id.recyclerView_order);
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         orderRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), DividerItemDecoration.VERTICAL));
+        orderIdList = new ArrayList<>();
         senderEmailList = new ArrayList<>();
         timeStampList = new ArrayList<>();
         itemCountList = new ArrayList<>();
@@ -123,6 +121,7 @@ public class OrderFragment extends Fragment {
 
     private void loadOrders(QuerySnapshot queryDocumentSnapshots){
         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+            orderIdList.add(document.getId());
             senderEmailList.add(document.getString("senderEmail"));
             timeStampList.add(document.getDate("timeStamp").toString());
             itemList.add((List<Map<String, Object>>) document.get("item"));
@@ -132,7 +131,7 @@ public class OrderFragment extends Fragment {
         for (int i = 0; i < itemList.size(); i++)
             itemCountList.add(Integer.toString(itemList.get(i).size())+" items");
         //orderRecyclerAdapter.notifyDataSetChanged();
-        orderRecyclerAdapter = new OrderRecyclerAdapter(senderEmailList, timeStampList, itemCountList, statusList);
+        orderRecyclerAdapter = new OrderRecyclerAdapter(getContext(), orderIdList, senderEmailList, timeStampList, itemCountList, statusList);
         orderRecyclerView.setAdapter(orderRecyclerAdapter);
     }
 

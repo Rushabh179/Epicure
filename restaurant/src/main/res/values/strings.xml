@@ -19,7 +19,7 @@
     <string name="tab_text_1">Orders</string>
     <string name="tab_text_2">Manage</string>
     <string name="tab_text_3">Tab 3</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_logout">Profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="manage_categories_btn">Categories</string>
     <string name="manage_subcategories_btn">Subcategories</string>

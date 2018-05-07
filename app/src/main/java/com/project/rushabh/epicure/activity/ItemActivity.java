@@ -633,6 +633,7 @@ public class ItemActivity extends AppCompatActivity implements ItemAdapter.IItem
                 itemMap.put("extendedPrice", orderList.get(i).extendedPrice);
                 itemList.add(itemMap);
             }
+            orderMap.put("deliverFirebaseId", "H7D4bBV1uguoaEp3ClrU");
             orderMap.put("senderFirebaseId", sharedPreferences.getString(getString(R.string.spk_user_id), ""));
             orderMap.put("receiverFirebaseId", placeId);
             orderMap.put("restaurantName", placeName);
